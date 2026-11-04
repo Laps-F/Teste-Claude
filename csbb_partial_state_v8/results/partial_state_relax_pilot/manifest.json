@@ -1,0 +1,81 @@
+{
+  "protocol_version": "controlled-v2-telemetry",
+  "date_created": "2026-10-30T16:44:31.222836+00:00",
+  "cpu": "",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "physical_cores": 5,
+  "physical_core_source": "lscpu / available CPU affinity",
+  "threads": 2,
+  "progress_interval_seconds": 0.1,
+  "repeats": 1,
+  "time_limit_seconds": 0.5,
+  "node_limit": null,
+  "seed": 20261028,
+  "suite": "core",
+  "comparison_ids": [
+    "partial_state_relax"
+  ],
+  "comparisons": [
+    {
+      "key": "partial_state_relax",
+      "label": "Cache incremental em prova relaxada",
+      "control": "partial_state_relax_off",
+      "treatment": "partial_state_relax_counts",
+      "rationale": "Apenas --partial-state-eval off→counts, relaxação full igual",
+      "optional": true
+    }
+  ],
+  "variants": {
+    "partial_state_relax_off": {
+      "key": "partial_state_relax_off",
+      "description": "Relaxação com prova paralela, estado padrão",
+      "overrides": {
+        "threads": 2,
+        "relaxation": "full",
+        "relax-proof-threads": 2,
+        "partial-state-eval": "off",
+        "partial-state-verify": 0
+      },
+      "warm": "on"
+    },
+    "partial_state_relax_counts": {
+      "key": "partial_state_relax_counts",
+      "description": "Relaxação com prova paralela e cache local",
+      "overrides": {
+        "threads": 2,
+        "relaxation": "full",
+        "relax-proof-threads": 2,
+        "partial-state-eval": "counts",
+        "partial-state-verify": 0
+      },
+      "warm": "on"
+    }
+  },
+  "instances": [
+    {
+      "dimension": 400,
+      "path": "/mnt/data/csbb_partial_state_v8/instances/frinhani_carvalho_soma/400/Random-400-400-2-1.txt",
+      "sha256": "7f6ea3408c640bec51956682c19500f987e56845e615fec25f0da85c6005fe68"
+    },
+    {
+      "dimension": 600,
+      "path": "/mnt/data/csbb_partial_state_v8/instances/frinhani_carvalho_soma/600/Random-600-600-2-1.txt",
+      "sha256": "bef93e7374aae0103513dd589ca45985064ac4845449194967823f692e22b51a"
+    },
+    {
+      "dimension": 800,
+      "path": "/mnt/data/csbb_partial_state_v8/instances/frinhani_carvalho_soma/800/Random-800-800-2-1.txt",
+      "sha256": "01343691fcdeef37ad14e57e18b2fffb3edd1d97be2ddbd00d0beed249741275"
+    },
+    {
+      "dimension": 1000,
+      "path": "/mnt/data/csbb_partial_state_v8/instances/frinhani_carvalho_soma/1000/Random-1000-1000-2-1.txt",
+      "sha256": "e36b86d140d8a158fc6b5d9d091d05a93791647af8c6e275743e6f951a1de00b"
+    }
+  ],
+  "solver": "/mnt/data/csbb_partial_state_v8/csbb_modern",
+  "solver_sha256": "4d2f4162b19b491aa10716081e1e92a701587ef4cee12b5226353de09d08ec46",
+  "mcnh": "/mnt/data/csbb_partial_state_v8/mcnh_modern",
+  "mcnh_sha256": "2965a4fc8fae7b12b2f3f34573443655d412d80da07b786955fb6f155a7c87b9",
+  "signature": "9887f4e7c7ccea0b475f62e09ce12edde0308dcdf7e812a696b798d32d868401"
+}

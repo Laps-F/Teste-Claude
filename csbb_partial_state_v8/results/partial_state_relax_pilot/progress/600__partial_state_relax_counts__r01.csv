@@ -1,0 +1,7 @@
+time_seconds,nodes_total,nodes_customer,nodes_relaxed_proofs,nodes_close_stack,nodes_frontier,upper_bound,lower_bound,gap_percent,relaxed_proofs_completed
+0.038389,0,0,0,0,0,145,9,1511.111111,0
+0.138780,0,0,0,0,0,145,9,1511.111111,0
+0.238924,1221,625,0,0,596,145,9,1511.111111,0
+0.339045,2561,1369,0,0,1192,144,9,1500.000000,0
+0.439162,3858,2069,0,0,1789,142,9,1477.777778,0
+0.521409,5075,2690,0,0,2385,141,9,1466.666667,0
