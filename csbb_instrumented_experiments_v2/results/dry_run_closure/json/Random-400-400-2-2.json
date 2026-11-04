@@ -1,0 +1,14 @@
+{
+  "/mnt/data/csbb_parallel_close_stack_v5/csbb_modern": "--input /mnt/data/csbb_parallel_close_stack_v5/instances/frinhani_carvalho_soma/400/Random-400-400-2-2.txt --input-format cs --presence legacy-one --auto-lower-mode graph --sequence-evaluator both --symmetry-break reverse-anchor --anchor-pattern auto --branching close-stack --closure-threads 4 --closure-parallel-depth 2 --closure-frontier-cap 64 --relaxation root-merge-probe --canonical-closures 1 --hash 1 --sort-moves 1 --group-moves 1 --threads 4 --parallel-depth 1 --time-limit 60.0 --profile 1 --json --quiet",
+  "instance": "Random-400-400-2-2.txt",
+  "instance_path": "/mnt/data/csbb_parallel_close_stack_v5/instances/frinhani_carvalho_soma/400/Random-400-400-2-2.txt",
+  "preset": "close-stack",
+  "input_format": "cs",
+  "presence": "legacy-one",
+  "return_code": 0,
+  "mcnh_return_code": null,
+  "command": "/mnt/data/csbb_parallel_close_stack_v5/csbb_modern --input /mnt/data/csbb_parallel_close_stack_v5/instances/frinhani_carvalho_soma/400/Random-400-400-2-2.txt --input-format cs --presence legacy-one --auto-lower-mode graph --sequence-evaluator both --symmetry-break reverse-anchor --anchor-pattern auto --branching close-stack --closure-threads 4 --closure-parallel-depth 2 --closure-frontier-cap 64 --relaxation root-merge-probe --canonical-closures 1 --hash 1 --sort-moves 1 --group-moves 1 --threads 4 --parallel-depth 1 --time-limit 60.0 --profile 1 --json --quiet",
+  "mcnh_command": "",
+  "batch_wall_seconds": 0.0,
+  "relaxation_mode": "root-merge-probe"
+}

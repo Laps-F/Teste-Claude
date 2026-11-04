@@ -1,0 +1,21 @@
+{
+  "preset": "low-risk",
+  "preset_description": "Recommended enhanced configuration with low-risk model-based additions: MCNh warm start, graph/model lower bounds, independent sequence validation, reverse-anchor handling for warm starts, customer branching, and conservative root-merge probing.",
+  "threads_resolved": 4,
+  "physical_cores_detected": 5,
+  "reserve_cores": 1,
+  "instances_dir": "instances/frinhani_carvalho_soma/400",
+  "n_instances": 2,
+  "instances": [
+    "/mnt/data/csbb_parallel_relaxed_proofs_v4/instances/frinhani_carvalho_soma/400/Random-400-400-2-1.txt",
+    "/mnt/data/csbb_parallel_relaxed_proofs_v4/instances/frinhani_carvalho_soma/400/Random-400-400-2-2.txt"
+  ],
+  "input_format": "cs",
+  "presence": "legacy-one",
+  "time_limit": 2.0,
+  "parallel_depth": 1,
+  "use_mcnh": 0,
+  "mcnh_preprocess": 1,
+  "residual_lb_mode": "off",
+  "residual_core_max_vertices": 192
+}

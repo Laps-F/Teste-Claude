@@ -1,0 +1,18 @@
+{
+  "preset": "original-modernized",
+  "preset_description": "Modernized Chu--Stuckey-style B&B backbone. It keeps customer branching, legacy lower-bound behavior, no imported sequence symmetry manipulation, and no root-merge probe. This is the closest preset to the original exact method after engineering modernization.",
+  "threads_resolved": 1,
+  "physical_cores_detected": 5,
+  "reserve_cores": 1,
+  "instances_dir": "/mnt/data/csbb_full_relaxation_v1/tests/batch_one",
+  "n_instances": 1,
+  "instances": [
+    "/mnt/data/csbb_full_relaxation_v1/tests/batch_one/regression002.cs"
+  ],
+  "input_format": "cs",
+  "presence": "legacy-one",
+  "time_limit": 2.0,
+  "parallel_depth": 1,
+  "use_mcnh": 0,
+  "mcnh_preprocess": 0
+}

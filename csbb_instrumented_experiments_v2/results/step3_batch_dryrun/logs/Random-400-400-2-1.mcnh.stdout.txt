@@ -1,0 +1,1 @@
+mcnh_modern --input /mnt/data/csbb_residual_bounds_v3/instances/frinhani_carvalho_soma/400/Random-400-400-2-1.txt --input-format cs --presence legacy-one --preprocess 1 --objective-orientation customer --warm-start-output results/step3_batch_dryrun/warm_starts/Random-400-400-2-1.warm.txt
