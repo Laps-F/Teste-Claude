@@ -1,0 +1,386 @@
+--- baseline/src/csbb_modern.cpp
++++ v6/src/csbb_modern.cpp
+@@ -47,6 +47,7 @@
+ #include <cctype>
+ #include <utility>
+ #include <vector>
++#include "csbb/mosp_bridge.hpp"
+ 
+ namespace csbb {
+ 
+@@ -357,6 +358,10 @@
+     double relax_max_time_share = 0.25;       // fraction of finite global time budget
+     std::string branching_mode = "customer";   // customer | close-stack | auto
+     bool canonical_stack_closure = true;       // canonicalize simultaneous closures
++    std::string witness_evaluator = "legacy"; // legacy | standalone | dual; all maintain independent certificate checks
++    std::string witness_decode = "legacy";    // legacy | sparse; semantics of customer decision cost preserved
++    bool verify_customer_witness = false;    // independently check reconstructed PRODUCT witness before incumbent updates
++    bool profile_evaluator = false;
+     std::string sequence_evaluator = "native"; // native | faggioli | both
+     std::string symmetry_break = "off";        // off | reverse-anchor
+     int anchor_pattern = -1;                   // 0-based; -1 means automatic
+@@ -385,6 +390,27 @@
+     int n_patterns = 0; // customers in Chu--Stuckey terminology
+     int n_pieces = 0;   // products in Chu--Stuckey terminology
+     std::vector<std::vector<unsigned char>> pattern_piece; // pattern x piece, boolean
++};
++
++struct EvaluationTelemetry {
++    mutable std::atomic<std::uint64_t> legacy_calls{0}, legacy_stream_calls{0}, standalone_calls{0}, sparse_stream_calls{0};
++    mutable std::atomic<std::uint64_t> customer_decode_legacy_calls{0}, customer_decode_sparse_calls{0};
++    mutable std::atomic<std::uint64_t> customer_witness_checks{0};
++    mutable std::atomic<std::uint64_t> legacy_ns{0}, legacy_stream_ns{0}, standalone_ns{0}, sparse_stream_ns{0}, decode_ns{0}, witness_ns{0};
++};
++
++struct EvaluationTimer {
++    bool enabled;
++    std::atomic<std::uint64_t>& calls;
++    std::atomic<std::uint64_t>& nanos;
++    Clock::time_point since;
++    EvaluationTimer(bool enabled_, std::atomic<std::uint64_t>& calls_, std::atomic<std::uint64_t>& nanos_)
++      : enabled(enabled_), calls(calls_), nanos(nanos_), since(enabled_ ? Clock::now() : Clock::time_point{}) {
++        if (enabled) calls.fetch_add(1, std::memory_order_relaxed);
++    }
++    ~EvaluationTimer() {
++        if (enabled) nanos.fetch_add(static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-since).count()),std::memory_order_relaxed);
++    }
+ };
+ 
+ struct DecisionResult {
+@@ -510,6 +536,13 @@
+     std::string warm_start_sequence_domain = "NONE";
+ 
+     ProfileStats profile;
++    std::string witness_evaluator = "legacy", witness_decode = "legacy";
++    double evaluator_bridge_setup_seconds = 0;
++    std::uint64_t evaluator_incidences = 0;
++    std::uint64_t evaluator_legacy_calls = 0, evaluator_legacy_stream_calls = 0, evaluator_standalone_calls = 0, evaluator_sparse_stream_calls = 0;
++    std::uint64_t witness_decode_legacy_calls = 0, witness_decode_sparse_calls = 0, customer_witness_checks = 0;
++    double evaluator_legacy_seconds = 0, evaluator_legacy_stream_seconds = 0, evaluator_standalone_seconds = 0;
++    double evaluator_sparse_stream_seconds = 0, witness_decode_seconds = 0, customer_witness_seconds = 0;
+     std::vector<int> best_pattern_order;
+ };
+ 
+@@ -710,6 +743,11 @@
+         cpu_start_ = std::clock();
+         read_instance();
+         build_sets();
++        if (opt_.witness_evaluator != "legacy" || opt_.verify_customer_witness) {
++            const auto bridge_start = Clock::now();
++            evaluator_bridge_ = std::make_unique<MospEvaluationBridge>(inst_.pattern_piece);
++            evaluator_bridge_setup_seconds_ = elapsed_since(bridge_start);
++        }
+         initialize_bounds();
+         load_warm_start_if_any();
+         if (opt_.relaxation_mode == "full") secure_full_incumbent();
+@@ -739,6 +777,9 @@
+                     if (v > k || v >= std::numeric_limits<int>::max() / 8)
+                         throw std::runtime_error("Full relaxation feasibility safeguard: invalid or absent original-graph witness");
+                 }
++                // Full PRODUCT witness check is independent from customer decision cost.
++                // Never substitute the product MOSP value for the customer-search bound.
++                verify_complete_customer_witness(decision_found_order_, k);
+                 last_completed_target_ = k;
+                 incumbent_ = k;
+                 publish_bounds();
+@@ -856,6 +897,11 @@
+     std::vector<Bitset> plays_; // piece -> patterns
+     std::vector<Bitset> cross_; // pattern -> patterns sharing at least one piece
+     std::vector<Bitset> pattern_pieces_; // pattern -> pieces/items
++    std::vector<std::vector<int>> products_by_customer_; // sparse, immutable after build_sets()
++    std::vector<std::vector<int>> customers_by_product_; // sparse transpose
++    std::unique_ptr<MospEvaluationBridge> evaluator_bridge_;
++    mutable EvaluationTelemetry evaluation_stats_;
++    double evaluator_bridge_setup_seconds_ = 0;
+     Bitset all_patterns_;
+     Bitset all_pieces_;
+ 
+@@ -993,6 +1039,8 @@
+         plays_.assign(inst_.n_pieces, Bitset(inst_.n_patterns));
+         cross_.assign(inst_.n_patterns, Bitset(inst_.n_patterns));
+         pattern_pieces_.assign(inst_.n_patterns, Bitset(inst_.n_pieces));
++        products_by_customer_.assign(inst_.n_patterns, {});
++        customers_by_product_.assign(inst_.n_pieces, {});
+ 
+         for (int p = 0; p < inst_.n_patterns; ++p) {
+             bool has_piece = false;
+@@ -1001,6 +1049,8 @@
+                     has_piece = true;
+                     plays_[j].set(p);
+                     pattern_pieces_[p].set(j);
++                    products_by_customer_[p].push_back(j);
++                    customers_by_product_[j].push_back(p);
+                 }
+             }
+             if (!has_piece) throw std::runtime_error("Pattern/customer with no pieces/products encountered.");
+@@ -1191,7 +1241,8 @@
+         return best;
+     }
+ 
+-    int evaluate_pattern_order_as_customer_order(const std::vector<int>& order, std::vector<int>* product_order_out = nullptr) const {
++    int evaluate_pattern_order_customer_legacy(const std::vector<int>& order, std::vector<int>* product_order_out) const {
++        EvaluationTimer timer(opt_.profile_evaluator, evaluation_stats_.customer_decode_legacy_calls, evaluation_stats_.decode_ns);
+         if (static_cast<int>(order.size()) != inst_.n_patterns) return std::numeric_limits<int>::max() / 4;
+         std::vector<char> seen_pattern(inst_.n_patterns, 0);
+         for (int p : order) {
+@@ -1219,6 +1270,60 @@
+         if (static_cast<int>(product_order.size()) != inst_.n_pieces) return std::numeric_limits<int>::max() / 4;
+         if (product_order_out) *product_order_out = std::move(product_order);
+         return best;
++    }
++
++    // Linear-in-incidences decoder: each customer is activated once; decrement
++    // the missing prerequisites only for products incident to newly opened customers.
++    // A sorted flush at each closure step preserves the legacy tie order exactly.
++    int evaluate_pattern_order_customer_sparse(const std::vector<int>& order, std::vector<int>* product_order_out) const {
++        EvaluationTimer timer(opt_.profile_evaluator, evaluation_stats_.customer_decode_sparse_calls, evaluation_stats_.decode_ns);
++        if (!validate_permutation(order)) return std::numeric_limits<int>::max()/4;
++        Bitset opened(inst_.n_patterns), remaining = all_patterns_;
++        std::vector<int> missing(static_cast<size_t>(inst_.n_pieces), 0);
++        std::vector<unsigned char> produced(static_cast<size_t>(inst_.n_pieces), 0);
++        std::vector<int> product_order;
++        product_order.reserve(inst_.n_pieces);
++        std::vector<int> now_ready;
++        for (int j=0; j<inst_.n_pieces; ++j) missing[j] = static_cast<int>(customers_by_product_[j].size());
++        int best=0;
++        for (size_t i=0; i<order.size(); ++i) {
++            const int p=order[i];
++            Bitset newly_opened = cross_[p].minus(opened);
++            opened.inplace_or(cross_[p]);
++            now_ready.clear();
++            if (i == 0) for(int j=0;j<inst_.n_pieces;++j)
++                if (missing[j] == 0) now_ready.push_back(j); // empty product, if any
++            newly_opened.for_each_set_bit([&](int customer){
++                for (int product : products_by_customer_[customer]) {
++                    if (--missing[product] == 0) now_ready.push_back(product);
++                }
++            });
++            std::sort(now_ready.begin(), now_ready.end());
++            for (int j : now_ready) {
++                if (produced[j]) throw std::runtime_error("Sparse witness decoder emitted product twice");
++                produced[j]=1; product_order.push_back(j);
++            }
++            best=std::max(best,opened.bit_and(remaining).count());
++            remaining.clear(p);
++        }
++        if (static_cast<int>(product_order.size()) != inst_.n_pieces) return std::numeric_limits<int>::max()/4;
++        if (product_order_out) *product_order_out = std::move(product_order);
++        return best;
++    }
++
++    int evaluate_pattern_order_as_customer_order(const std::vector<int>& order,
++                                                 std::vector<int>* product_order_out = nullptr) const {
++        if (opt_.witness_decode == "sparse") return evaluate_pattern_order_customer_sparse(order,product_order_out);
++        if (opt_.witness_decode == "dual") {
++            std::vector<int> old_products, new_products;
++            const int old_cost = evaluate_pattern_order_customer_legacy(order, &old_products);
++            const int new_cost = evaluate_pattern_order_customer_sparse(order, &new_products);
++            if (old_cost != new_cost || old_products != new_products)
++                throw std::runtime_error("Customer-order decoding mismatch: legacy and sparse outputs differ");
++            if (product_order_out) *product_order_out = std::move(new_products);
++            return new_cost;
++        }
++        return evaluate_pattern_order_customer_legacy(order,product_order_out);
+     }
+ 
+     // An imported MCNh certificate must encode a PRODUCT sequence. The MOSP
+@@ -1238,6 +1343,7 @@
+     // Independent evaluator A: a customer stack is active at every position
+     // between its first and last produced product (inclusive).
+     int evaluate_product_order_intervals(const std::vector<int>& order) const {
++        EvaluationTimer timer(opt_.profile_evaluator, evaluation_stats_.legacy_calls, evaluation_stats_.legacy_ns);
+         if (!valid_product_permutation(order)) throw std::runtime_error("Invalid product permutation in warm start");
+         std::vector<int> position(static_cast<size_t>(inst_.n_pieces));
+         for (int t = 0; t < inst_.n_pieces; ++t) position[static_cast<size_t>(order[t])] = t;
+@@ -1264,6 +1370,7 @@
+     // before closing those completed by this product. Matches the MCNh
+     // counting convention, but is implemented on the original CS matrix.
+     int evaluate_product_order_streaming(const std::vector<int>& order) const {
++        EvaluationTimer timer(opt_.profile_evaluator, evaluation_stats_.legacy_stream_calls, evaluation_stats_.legacy_stream_ns);
+         if (!valid_product_permutation(order)) throw std::runtime_error("Invalid product permutation in warm start");
+         std::vector<int> remaining(static_cast<size_t>(inst_.n_patterns), 0);
+         std::vector<unsigned char> opened(static_cast<size_t>(inst_.n_patterns), 0);
+@@ -1282,6 +1389,55 @@
+         }
+         if (active != 0) throw std::runtime_error("Unclosed stacks after warm-start evaluation");
+         return best;
++    }
++
++    // Independent streaming verification over the sparse transpose of the ORIGINAL matrix.
++    int evaluate_product_order_streaming_sparse(const std::vector<int>& order) const {
++        EvaluationTimer timer(opt_.profile_evaluator, evaluation_stats_.sparse_stream_calls, evaluation_stats_.sparse_stream_ns);
++        if (!valid_product_permutation(order)) throw std::runtime_error("Invalid product permutation in sparse verifier");
++        std::vector<int> remaining(static_cast<size_t>(inst_.n_patterns), 0);
++        std::vector<unsigned char> opened(static_cast<size_t>(inst_.n_patterns), 0);
++        for (int c=0;c<inst_.n_patterns;++c) remaining[c] = static_cast<int>(products_by_customer_[c].size());
++        int active=0, best=0;
++        for (int product : order) {
++            int closes=0;
++            for (int c : customers_by_product_[product]) {
++                if (!opened[c]) { opened[c]=1; ++active; }
++                if (--remaining[c] == 0) ++closes;
++            }
++            best = std::max(best,active);
++            active -= closes;
++        }
++        if (active != 0) throw std::runtime_error("Sparse witness verification: unfinished customer stacks");
++        return best;
++    }
++
++    int evaluate_product_order_standalone(const std::vector<int>& order) const {
++        if (!evaluator_bridge_) throw std::runtime_error("Standalone evaluator bridge not initialized");
++        EvaluationTimer timer(opt_.profile_evaluator, evaluation_stats_.standalone_calls, evaluation_stats_.standalone_ns);
++        return evaluator_bridge_->evaluate(order);
++    }
++
++    // Conversion from a CUSTOMER-CLOSURE permutation, not directly a product permutation.
++    // The Chu--Stuckey customer decision cost must remain a separate quantity.
++    void verify_complete_customer_witness(const std::vector<int>& customer_order, int target) const {
++        if (!opt_.verify_customer_witness) return;
++        const auto start=Clock::now();
++        evaluation_stats_.customer_witness_checks.fetch_add(1, std::memory_order_relaxed);
++        std::vector<int> products;
++        const int customer_cost = evaluate_pattern_order_as_customer_order(customer_order, &products);
++        if (customer_cost > target || !valid_product_permutation(products))
++            throw std::runtime_error("Customer witness has invalid internal cost or incomplete product permutation");
++        const int external = evaluate_product_order_standalone(products);
++        if (external > target) throw std::runtime_error("Customer witness: actual MOSP exceeds certified target");
++        if (opt_.witness_evaluator == "dual") {
++            if (external != evaluate_product_order_intervals(products) ||
++                external != evaluate_product_order_streaming_sparse(products))
++                throw std::runtime_error("Customer witness disagreement between evaluators");
++        }
++        if (opt_.profile_evaluator) evaluation_stats_.witness_ns.fetch_add(
++            static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count()),
++            std::memory_order_relaxed);
+     }
+ 
+     struct ImportedWarm {
+@@ -1377,8 +1533,22 @@
+         ImportedWarm w = parse_warm_file(opt_.warm_start_file);
+         warm_start_sequence_domain_ = w.domain;
+         warm_start_declared_value_ = w.declared;
+-        const int interval_score = evaluate_product_order_intervals(w.product_order);
+-        const int streamed_score = evaluate_product_order_streaming(w.product_order);
++        int interval_score = -1;
++        int streamed_score = -1;
++        if (opt_.witness_evaluator == "legacy") {
++            interval_score = evaluate_product_order_intervals(w.product_order);
++            streamed_score = evaluate_product_order_streaming(w.product_order);
++        } else if (opt_.witness_evaluator == "standalone") {
++            interval_score = evaluate_product_order_standalone(w.product_order);
++            streamed_score = evaluate_product_order_streaming_sparse(w.product_order);
++        } else { // dual: independent reference + library + sparse verifier
++            interval_score = evaluate_product_order_intervals(w.product_order);
++            streamed_score = evaluate_product_order_streaming(w.product_order);
++            const int standalone_score = evaluate_product_order_standalone(w.product_order);
++            const int sparse_score = evaluate_product_order_streaming_sparse(w.product_order);
++            if (standalone_score != interval_score || sparse_score != interval_score)
++                throw std::runtime_error("Warm-start verification failure: standalone and reference scores differ");
++        }
+         if (interval_score != streamed_score) throw std::runtime_error("Warm-start verification failure: independent original-instance evaluators disagree");
+         warm_start_verified_ = true;
+         warm_start_verified_value_ = interval_score;
+@@ -2719,6 +2889,23 @@
+         r.relaxation_successes = relaxation_successes_;
+         r.relaxation_merges = relaxation_merges_;
+         r.profile = profile_;
++        r.witness_evaluator = opt_.witness_evaluator;
++        r.witness_decode = opt_.witness_decode;
++        r.evaluator_bridge_setup_seconds = evaluator_bridge_setup_seconds_;
++        r.evaluator_incidences = evaluator_bridge_ ? evaluator_bridge_->incidences() : 0;
++        r.evaluator_legacy_calls = evaluation_stats_.legacy_calls.load();
++        r.evaluator_legacy_stream_calls = evaluation_stats_.legacy_stream_calls.load();
++        r.evaluator_standalone_calls = evaluation_stats_.standalone_calls.load();
++        r.evaluator_sparse_stream_calls = evaluation_stats_.sparse_stream_calls.load();
++        r.witness_decode_legacy_calls = evaluation_stats_.customer_decode_legacy_calls.load();
++        r.witness_decode_sparse_calls = evaluation_stats_.customer_decode_sparse_calls.load();
++        r.customer_witness_checks = evaluation_stats_.customer_witness_checks.load();
++        r.evaluator_legacy_seconds = evaluation_stats_.legacy_ns.load() * 1e-9;
++        r.evaluator_legacy_stream_seconds = evaluation_stats_.legacy_stream_ns.load() * 1e-9;
++        r.evaluator_standalone_seconds = evaluation_stats_.standalone_ns.load() * 1e-9;
++        r.evaluator_sparse_stream_seconds = evaluation_stats_.sparse_stream_ns.load() * 1e-9;
++        r.witness_decode_seconds = evaluation_stats_.decode_ns.load() * 1e-9;
++        r.customer_witness_seconds = evaluation_stats_.witness_ns.load() * 1e-9;
+         r.relaxed_proof_status = relaxed_proof_status_;
+         r.proof_source = proof_source_;
+         r.relaxed_proofs_attempted = relaxed_proofs_attempted_;
+@@ -2801,6 +2988,10 @@
+         else if (a == "--relax-proof-frontier-cap") o.relax_proof_frontier_cap = std::stoi(need(a));
+         else if (a == "--branching") o.branching_mode = need(a);
+         else if (a == "--canonical-closures") { o.canonical_stack_closure = (need(a) != "0"); o.group_moves = o.canonical_stack_closure; }
++        else if (a == "--witness-evaluator") o.witness_evaluator = need(a);
++        else if (a == "--witness-decode") o.witness_decode = need(a);
++        else if (a == "--verify-customer-witness") o.verify_customer_witness = (need(a) != "0");
++        else if (a == "--profile-evaluator") o.profile_evaluator = (need(a) != "0");
+         else if (a == "--sequence-evaluator") o.sequence_evaluator = need(a);
+         else if (a == "--symmetry-break") o.symmetry_break = need(a);
+         else if (a == "--anchor-pattern") {
+@@ -2829,7 +3020,7 @@
+                          "[--presence positive|legacy-one] [--warm-start-file FILE] "
+                          "[--upper U] [--lower L|--auto-lower 0|1] [--auto-lower-mode off|legacy|model|graph] [--residual-lb off|next|core] [--residual-core-max-vertices N] [--warm-start-policy value|sequence|strict] "
+                          "[--relaxation off|root-merge-probe|full] [--relax-merge-policy original] [--relax-unmerge-policy original|lifo] [--relax-max-merges N] [--relax-max-time-share P] [--relax-proof-threads N] [--relax-proof-depth D] [--relax-proof-frontier-cap N] [--branching customer|close-stack|auto] [--canonical-closures 0|1] [--sequence-evaluator native|faggioli|both] "
+-                         "[--symmetry-break off|reverse-anchor] [--anchor-pattern auto|ID] [--emit-stack-profile FILE] "
++                         "[--witness-evaluator legacy|standalone|dual] [--witness-decode legacy|sparse|dual] [--verify-customer-witness 0|1] [--profile-evaluator 0|1] [--symmetry-break off|reverse-anchor] [--anchor-pattern auto|ID] [--emit-stack-profile FILE] "
+                          "[--profile 0|1] [--progress-interval SECONDS --progress-file FILE] [--time-limit SECONDS] [--node-limit N] "
+                          "[--threads N] [--parallel-depth D] [--closure-threads N] [--closure-parallel-depth D] [--closure-frontier-cap N] "
+                          "[--hash 0|1] [--sort-moves 0|1] [--group-moves 0|1] [--json] [--quiet]\n";
+@@ -2855,6 +3046,10 @@
+     if (o.relax_proof_frontier_cap < 1) throw std::runtime_error("--relax-proof-frontier-cap must be positive.");
+     if (o.branching_mode != "customer" && o.branching_mode != "close-stack" && o.branching_mode != "auto") throw std::runtime_error("Invalid --branching.");
+     if (o.sequence_evaluator != "native" && o.sequence_evaluator != "faggioli" && o.sequence_evaluator != "both") throw std::runtime_error("Invalid --sequence-evaluator.");
++    if (o.witness_evaluator != "legacy" && o.witness_evaluator != "standalone" && o.witness_evaluator != "dual")
++        throw std::runtime_error("Invalid --witness-evaluator");
++    if (o.witness_decode != "legacy" && o.witness_decode != "sparse" && o.witness_decode != "dual")
++        throw std::runtime_error("Invalid --witness-decode");
+     if (o.symmetry_break != "off" && o.symmetry_break != "reverse-anchor") throw std::runtime_error("Invalid --symmetry-break.");
+     if (o.threads < 1) throw std::runtime_error("--threads must be positive.");
+     if (o.parallel_depth < 0) throw std::runtime_error("--parallel-depth must be nonnegative.");
+@@ -2922,6 +3117,23 @@
+     std::cout << "profile_relaxation_probe_seconds " << r.profile.relaxation_probe_seconds << "\n";
+     std::cout << "profile_frontier_seconds " << r.profile.frontier_seconds << "\n";
+     std::cout << "profile_warm_start_seconds " << r.profile.warm_start_seconds << "\n";
++    std::cout << "witness_evaluator " << r.witness_evaluator << "\n";
++    std::cout << "witness_decode " << r.witness_decode << "\n";
++    std::cout << "evaluator_bridge_setup_seconds " << r.evaluator_bridge_setup_seconds << "\n";
++    std::cout << "evaluator_incidences " << r.evaluator_incidences << "\n";
++    std::cout << "evaluator_legacy_calls " << r.evaluator_legacy_calls << "\n";
++    std::cout << "evaluator_legacy_stream_calls " << r.evaluator_legacy_stream_calls << "\n";
++    std::cout << "evaluator_standalone_calls " << r.evaluator_standalone_calls << "\n";
++    std::cout << "evaluator_sparse_stream_calls " << r.evaluator_sparse_stream_calls << "\n";
++    std::cout << "witness_decode_legacy_calls " << r.witness_decode_legacy_calls << "\n";
++    std::cout << "witness_decode_sparse_calls " << r.witness_decode_sparse_calls << "\n";
++    std::cout << "customer_witness_checks " << r.customer_witness_checks << "\n";
++    std::cout << "evaluator_legacy_seconds " << r.evaluator_legacy_seconds << "\n";
++    std::cout << "evaluator_legacy_stream_seconds " << r.evaluator_legacy_stream_seconds << "\n";
++    std::cout << "evaluator_standalone_seconds " << r.evaluator_standalone_seconds << "\n";
++    std::cout << "evaluator_sparse_stream_seconds " << r.evaluator_sparse_stream_seconds << "\n";
++    std::cout << "witness_decode_seconds " << r.witness_decode_seconds << "\n";
++    std::cout << "customer_witness_seconds " << r.customer_witness_seconds << "\n";
+     std::cout << "profile_residual_lb_seconds " << r.profile.residual_lb_seconds << "\n";
+     std::cout << "threads " << r.threads << "\n";
+     std::cout << "parallel_depth " << r.parallel_depth << "\n";
+@@ -3033,6 +3245,23 @@
+     std::cout << "  \"profile_relaxation_probe_seconds\": " << r.profile.relaxation_probe_seconds << ",\n";
+     std::cout << "  \"profile_frontier_seconds\": " << r.profile.frontier_seconds << ",\n";
+     std::cout << "  \"profile_warm_start_seconds\": " << r.profile.warm_start_seconds << ",\n";
++    std::cout << "  \"witness_evaluator\": \"" << r.witness_evaluator << "\",\n";
++    std::cout << "  \"witness_decode\": \"" << r.witness_decode << "\",\n";
++    std::cout << "  \"evaluator_bridge_setup_seconds\": " << r.evaluator_bridge_setup_seconds << ",\n";
++    std::cout << "  \"evaluator_incidences\": " << r.evaluator_incidences << ",\n";
++    std::cout << "  \"evaluator_legacy_calls\": " << r.evaluator_legacy_calls << ",\n";
++    std::cout << "  \"evaluator_legacy_stream_calls\": " << r.evaluator_legacy_stream_calls << ",\n";
++    std::cout << "  \"evaluator_standalone_calls\": " << r.evaluator_standalone_calls << ",\n";
++    std::cout << "  \"evaluator_sparse_stream_calls\": " << r.evaluator_sparse_stream_calls << ",\n";
++    std::cout << "  \"witness_decode_legacy_calls\": " << r.witness_decode_legacy_calls << ",\n";
++    std::cout << "  \"witness_decode_sparse_calls\": " << r.witness_decode_sparse_calls << ",\n";
++    std::cout << "  \"customer_witness_checks\": " << r.customer_witness_checks << ",\n";
++    std::cout << "  \"evaluator_legacy_seconds\": " << r.evaluator_legacy_seconds << ",\n";
++    std::cout << "  \"evaluator_legacy_stream_seconds\": " << r.evaluator_legacy_stream_seconds << ",\n";
++    std::cout << "  \"evaluator_standalone_seconds\": " << r.evaluator_standalone_seconds << ",\n";
++    std::cout << "  \"evaluator_sparse_stream_seconds\": " << r.evaluator_sparse_stream_seconds << ",\n";
++    std::cout << "  \"witness_decode_seconds\": " << r.witness_decode_seconds << ",\n";
++    std::cout << "  \"customer_witness_seconds\": " << r.customer_witness_seconds << ",\n";
+     std::cout << "  \"profile_residual_lb_seconds\": " << r.profile.residual_lb_seconds << ",\n";
+     std::cout << "  \"threads\": " << r.threads << ",\n";
+     std::cout << "  \"parallel_depth\": " << r.parallel_depth << ",\n";
