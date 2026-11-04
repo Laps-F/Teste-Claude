@@ -1,0 +1,12 @@
+{
+  "random_instances": 20,
+  "additional_instances": 2,
+  "regression_variant_runs": 110,
+  "parallel_closure_calls": 185,
+  "runs_with_multiple_workers": 42,
+  "caps": "PASS",
+  "node_time_limits": "PASS",
+  "full_relaxation": "PASS",
+  "invalid_flags": "PASS",
+  "result": "PASS"
+}

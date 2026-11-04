@@ -1,0 +1,2 @@
+[1/1] running regression002.cs with preset=original-modernized, threads=1
+Done. Consolidated outputs written to /mnt/data/csbb_full_relaxation_v1/results/batch_test

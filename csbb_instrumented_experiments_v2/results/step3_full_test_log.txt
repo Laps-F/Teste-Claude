@@ -1,0 +1,11 @@
+Built csbb_modern, csbb_baseline, original/chu_stuckey_2009, mcnh_modern
+PASS reversible_contractions=1875 lower_bound_monotonicity_checks=1875
+REGRESSION: 76 cases, 0 failures, relaxed_graph_proofs=6, fallbacks=3, elapsed=0.98s
+WARM-START CERTIFICATES: 151 checks passed
+PASS root_checks=240 states=47132 targeted_core_checks=419200
+{
+  "cases": 129,
+  "test_runs": 516,
+  "residual_states_checked": 13545,
+  "result": "PASS"
+}

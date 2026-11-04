@@ -1,0 +1,292 @@
+[
+  {
+    "instance": "r000.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r001.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r002.cs",
+    "optimum": 5,
+    "serial_proofs": 2
+  },
+  {
+    "instance": "r003.cs",
+    "optimum": 7,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r004.cs",
+    "optimum": 8,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r005.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r006.cs",
+    "optimum": 5,
+    "serial_proofs": 5
+  },
+  {
+    "instance": "r007.cs",
+    "optimum": 11,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r008.cs",
+    "optimum": 12,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r009.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r010.cs",
+    "optimum": 2,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r011.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r012.cs",
+    "optimum": 5,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r013.cs",
+    "optimum": 8,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r014.cs",
+    "optimum": 9,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r015.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r016.cs",
+    "optimum": 6,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r017.cs",
+    "optimum": 7,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r018.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r019.cs",
+    "optimum": 5,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r020.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r021.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r022.cs",
+    "optimum": 8,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r023.cs",
+    "optimum": 9,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r024.cs",
+    "optimum": 10,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r025.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r026.cs",
+    "optimum": 5,
+    "serial_proofs": 7
+  },
+  {
+    "instance": "r027.cs",
+    "optimum": 4,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r028.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r029.cs",
+    "optimum": 6,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r030.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r031.cs",
+    "optimum": 6,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r032.cs",
+    "optimum": 5,
+    "serial_proofs": 4
+  },
+  {
+    "instance": "r033.cs",
+    "optimum": 9,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r034.cs",
+    "optimum": 11,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r035.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r036.cs",
+    "optimum": 2,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r037.cs",
+    "optimum": 5,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r038.cs",
+    "optimum": 6,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r039.cs",
+    "optimum": 7,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r040.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r041.cs",
+    "optimum": 5,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r042.cs",
+    "optimum": 9,
+    "serial_proofs": 2
+  },
+  {
+    "instance": "r043.cs",
+    "optimum": 11,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r044.cs",
+    "optimum": 12,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r045.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r046.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r047.cs",
+    "optimum": 5,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r048.cs",
+    "optimum": 6,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r049.cs",
+    "optimum": 8,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r050.cs",
+    "optimum": 3,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r051.cs",
+    "optimum": 5,
+    "serial_proofs": 5
+  },
+  {
+    "instance": "r052.cs",
+    "optimum": 7,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r053.cs",
+    "optimum": 12,
+    "serial_proofs": 1
+  },
+  {
+    "instance": "r054.cs",
+    "optimum": 4,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "r055.cs",
+    "optimum": 2,
+    "serial_proofs": 0
+  },
+  {
+    "instance": "A_AP-9.cs",
+    "optimum": 5,
+    "serial_proofs": 23
+  },
+  {
+    "instance": "invalid_graph_lb_counterexample.cs",
+    "optimum": 2,
+    "serial_proofs": 0
+  }
+]

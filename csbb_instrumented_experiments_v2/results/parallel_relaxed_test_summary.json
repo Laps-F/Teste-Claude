@@ -1,0 +1,9 @@
+{
+  "cases": 58,
+  "variant_runs": 232,
+  "parallel_proof_calls": 102,
+  "inheritance": "PASS",
+  "node_limits": "PASS",
+  "invalid_flags": "PASS",
+  "result": "PASS"
+}

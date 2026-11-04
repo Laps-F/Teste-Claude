@@ -1,0 +1,194 @@
+Batch script parameters
+=======================
+
+Core campaign parameters
+------------------------
+--instances-dir DIR
+    Folder containing instance files. Files are executed sequentially.
+
+--file-glob PATTERN
+    Glob pattern relative to --instances-dir. Can be repeated. Default: *.txt and *.dat.
+
+--output-dir DIR
+    Folder for consolidated outputs. The script creates logs/, warm_starts/, json/, and profiles/.
+
+--preset original-modernized|low-risk|close-stack
+    Selects one of the three predefined configurations.
+
+--solver FILE
+    Path to csbb_modern executable.
+
+--mcnh FILE
+    Path to mcnh_modern executable. Required when --use-mcnh 1.
+
+--resume 0|1
+    If 1, skip an instance when its per-instance JSON output already exists.
+
+--dry-run
+    Print commands without executing them.
+
+Instance interpretation
+-----------------------
+--input-format cs|scoop
+    cs: Frinhani--Carvalho--Soma / Chu--Stuckey matrix format, first line m n,
+        followed by an m x n pattern-by-piece matrix.
+    scoop: legacy MCNh/SCOOP format, first line nPieces nPatterns, followed by
+        the matrix in the legacy order.
+
+--presence legacy-one|positive
+    legacy-one: a piece is present only when the entry is exactly 1. Recommended
+        for binary CS instances.
+    positive: any positive entry means presence. Recommended for SCOOP-like
+        instances with multiplicities.
+
+Parallel execution
+------------------
+--threads auto|N
+    auto detects the number of physical CPU cores and uses cores - --reserve-cores.
+    An integer N passes N directly to the solver.
+
+--reserve-cores N
+    Number of physical cores kept free when --threads auto. Default: 1.
+
+--parallel-depth D
+    Branch-and-bound parallel frontier depth. Recommended initial value: 1 for
+    400x400; increase only after profiling.
+
+Stopping criteria
+-----------------
+--time-limit SECONDS
+    Time limit passed to the B&B. The solver reports UB, LB and gap if stopped.
+
+--node-limit N
+    Optional node limit passed to the B&B.
+
+Warm start / MCNh
+-----------------
+--use-mcnh 0|1
+    If 1, run MCNh before B&B for each instance and pass the generated warm-start file.
+
+--mcnh-preprocess 0|1
+    Activates dominance preprocessing inside MCNh. Ignored when --use-mcnh 0.
+
+--warm-start-policy value|sequence|strict
+    value: require MCNh's declared value to equal two independently checked
+        costs of a complete PRODUCT permutation for the original CS matrix.
+    sequence: ignore the declared value and use the independently verified cost.
+    strict: same verified cost requirement as value; rejects absent/mismatched value.
+    All modes reject unlabelled, wrongly oriented, incomplete or duplicated sequences.
+    The MCNh is invoked with --objective-orientation customer automatically.
+
+B&B algorithm parameters
+------------------------
+--auto-lower-mode off|legacy|model|graph
+    off: no automatic lower bound.
+    legacy: preserves legacy lower-bound behavior.
+    model: compatibility alias using proven legacy bound; model cardinality is logged as diagnostic.
+    graph: max(legacy, CUSTOMER co-occurrence graph degeneracy+1), a proved LB.
+    The old PRODUCT graph bounds remain logged as diagnostics only.
+
+--residual-lb off|next|core
+    off: unchanged previous search (default, backward-compatible).
+    next: admissible minimum immediate peak over every possible first customer closure.
+    core: next plus a target-specific k-core test of the induced remaining CUSTOMER graph.
+    Both work in serial, parallel-frontier and exact contracted-graph proof.
+
+--residual-core-max-vertices N
+    Skip the costlier k-core test when more than N customers remain; still apply next.
+    Default 192; 0 disables the size cap (useful for small tests, may be expensive).
+
+--sequence-evaluator native|faggioli|both
+    Legacy evaluator selector for internally represented customer orders.
+    Imported MCNh product sequences are ALWAYS checked using two independent
+    original-instance MOSP evaluators, regardless of this selector.
+
+--symmetry-break off|reverse-anchor
+    reverse-anchor can reverse an imported pattern sequence so that the selected
+    anchor pattern is positioned in the first half. It is intended for warm-start
+    pattern sequences, not as a proof rule in the customer-search tree.
+
+--anchor-pattern auto|ID
+    Anchor pattern for reverse-anchor symmetry handling. ID is 1-based. Use only
+    with --symmetry-break reverse-anchor; otherwise it has no effect.
+
+--branching customer|close-stack|auto
+    customer: modernized Chu--Stuckey customer-search backbone.
+    close-stack: branching by stack closure with safety fallback.
+    auto: reserved for adaptive selection.
+
+--relaxation off|root-merge-probe|full
+    off: no relaxation/probe.
+    root-merge-probe: conservative root-level merge-inspired probe for incumbents.
+    full: reversible graph contractions and exact proof of infeasibility on contracted graphs;
+        on inconclusive cases, selective unmerge and certified original-graph fallback.
+
+--relax-merge-policy original
+    Chu--Stuckey (2009) danger-based root-level adjacent-customer merge selection.
+
+--relax-unmerge-policy original|lifo
+    original: preferentially undo a merge whose removal invalidates the lifted
+        relaxed witness, following the 2009 findunmerge selection principle.
+    lifo: undo the most recent merge (deterministic lower overhead).
+
+--relax-max-merges N
+    Maximum initial root-level contractions. 0: until active customers <= target.
+
+--relax-max-time-share P
+    Fraction P in [0,1] of the total positive --time-limit spent on full relaxation;
+    after that, continue original-graph search, subject to remaining time.
+
+--canonical-closures 0|1
+    Canonicalizes simultaneous stack closures. Default/recommended: 1.
+
+--emit-stack-profile 0|1
+    If 1, creates one stack-profile CSV per instance and passes --emit-stack-profile.
+
+--profile 0|1
+    If 1, requests solver component timings and stores them in the output.
+
+Low-level B&B parameters
+------------------------
+--hash 0|1
+    Enables dominance/hash memoization. Disabling it is for diagnostics only.
+
+--sort-moves 0|1
+    Enables move ordering. Recommended: 1.
+
+--group-moves 0|1
+    Enables move grouping. Recommended: 1. Normally aligned with canonical closures.
+
+Important incompatibilities and cautions
+========================================
+1. --warm-start-policy sequence or strict requires a warm-start file. In this
+   script that means either --use-mcnh 1 or an externally supplied warm-start
+   mechanism added by the user.
+
+2. --symmetry-break reverse-anchor does not transform imported PRODUCT
+   sequences used as MCNh certificates. It is retained only for older
+   internal customer-close-order functionality; strict is safe with it.
+
+3. --anchor-pattern ID is meaningful only with --symmetry-break reverse-anchor.
+   With --symmetry-break off, it is ignored.
+
+4. --mcnh-preprocess is meaningful only with --use-mcnh 1.
+
+5. --branching close-stack is an experimental mode with safety fallback. Use
+   --branching customer for the most conservative production baseline.
+
+6. --relaxation root-merge-probe is a heuristic probe; --relaxation full enables
+   exact minor-graph infeasibility proof and selective unmerge. ALL modes verify
+   imported MCNh PRODUCT sequences on the ORIGINAL matrix; unverified numeric
+   --upper hints are ignored. Full mode also retains its verified greedy
+   customer-order fallback. It also
+   reverts initial LB to the proven legacy product-simultaneity bound; previous
+   model/graph lower bounds require separate mathematical validation.
+
+7. --input-format and --presence must match the dataset. For the binary random
+   CS instances, use --input-format cs --presence legacy-one.
+
+8. --threads auto is handled by this script, not by the solver. The solver always
+   receives an explicit integer thread count.
+
+9. Running several instances in parallel externally while also using --threads > 1
+   inside the solver may oversubscribe the machine. This script intentionally runs
+   instances sequentially.
