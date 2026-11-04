@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "verified_base_install": "PASS",
+  "idempotent_reinstall_files_written": 0,
+  "changed_base_refused_before_writes": true,
+  "original_backups_verified": 11
+}

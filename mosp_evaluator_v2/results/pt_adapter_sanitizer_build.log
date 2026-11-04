@@ -1,0 +1,57 @@
+In file included from MOSP.cpp:4:
+MCNH/HNCM.h: In function ‘void initialization()’:
+MCNH/HNCM.h:87:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   87 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:97:32: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   97 |                         system ("pause");
+      |                         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:106:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  106 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:114:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  114 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:122:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  122 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:130:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  130 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:138:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  138 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:146:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  146 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:154:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  154 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:162:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  162 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:172:32: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  172 |                         system ("pause");
+      |                         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:181:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  181 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:189:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  189 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:197:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  197 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:205:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  205 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:214:16: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  214 |         system ("pause");
+      |         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:222:16: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  222 |         system ("pause");
+      |         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h: In function ‘void readProblem(char*, bool)’:
+MCNH/HNCM.h:257:15: warning: ignoring return value of ‘int fscanf(FILE*, const char*, ...)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  257 |         fscanf(fpIn, "%d %d", &nPatterns, &nPieces);
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

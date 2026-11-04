@@ -1,0 +1,129 @@
+{
+  "version": "2.0.0",
+  "date": "2026-10-29",
+  "core_checks": [
+    {
+      "status": "PASS",
+      "exhaustive_move_scenarios": 377856,
+      "random_chained_scenarios": 40000,
+      "parallel_scenarios": 8000,
+      "parallel_workers": 8,
+      "serial_assertions": 11201883
+    },
+    {
+      "allocation_probe": "PASS",
+      "iterations": 10000,
+      "allocations_after_warmup": 0,
+      "checksum": 2633620000
+    },
+    {
+      "status": "PASS",
+      "adaptive_chain_scenarios": 14400,
+      "shared_plan_parallel_scenarios": 2400,
+      "checks": 264366
+    },
+    {
+      "status": "PASS",
+      "replicas": 4,
+      "proposals": 12000,
+      "accepted": 8124,
+      "rejected": 3876,
+      "worsening_accepted": 1056,
+      "exchanges": 350
+    },
+    {
+      "status": "PASS",
+      "energy": "mosp",
+      "backend": "full",
+      "proposals": 12000,
+      "accepted": 6942,
+      "rejected": 5058,
+      "worsening_accepted": 778,
+      "exchanges": 218,
+      "trajectory_hash": 9268521355388061847
+    },
+    {
+      "status": "PASS",
+      "energy": "mosp",
+      "backend": "incremental",
+      "proposals": 12000,
+      "accepted": 6942,
+      "rejected": 5058,
+      "worsening_accepted": 778,
+      "exchanges": 218,
+      "trajectory_hash": 9268521355388061847
+    },
+    {
+      "status": "PASS",
+      "energy": "mosp",
+      "backend": "auto",
+      "proposals": 12000,
+      "accepted": 6942,
+      "rejected": 5058,
+      "worsening_accepted": 778,
+      "exchanges": 218,
+      "trajectory_hash": 9268521355388061847
+    },
+    {
+      "status": "PASS",
+      "energy": "mmosp",
+      "backend": "full",
+      "proposals": 12000,
+      "accepted": 6517,
+      "rejected": 5483,
+      "worsening_accepted": 2009,
+      "exchanges": 176,
+      "trajectory_hash": 9195654474554505231
+    },
+    {
+      "status": "PASS",
+      "energy": "mmosp",
+      "backend": "incremental",
+      "proposals": 12000,
+      "accepted": 6517,
+      "rejected": 5483,
+      "worsening_accepted": 2009,
+      "exchanges": 176,
+      "trajectory_hash": 9195654474554505231
+    },
+    {
+      "status": "PASS",
+      "energy": "mmosp",
+      "backend": "auto",
+      "proposals": 12000,
+      "accepted": 6517,
+      "rejected": 5483,
+      "worsening_accepted": 2009,
+      "exchanges": 176,
+      "trajectory_hash": 9195654474554505231
+    },
+    {
+      "cli_status": "PASS",
+      "cli_cases": 22
+    }
+  ],
+  "instrumentation": {
+    "address_sanitizer": "PASS",
+    "undefined_behavior_sanitizer": "PASS",
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+    "leak_sanitizer": "disabled: host thread-enumeration restriction",
+    "thread_sanitizer": "not run"
+  },
+  "pt_release": {
+    "status": "PASS",
+    "pt_configurations": 72,
+    "edge_cases": 4,
+    "pt_proposals_audited": 37632
+  },
+  "pt_sanitizers": {
+    "status": "PASS",
+    "pt_configurations": 72,
+    "edge_cases": 4,
+    "pt_proposals_audited": 37632
+  },
+  "pt_precision": "PASS",
+  "pt_construction_layout_consistency": "PASS",
+  "synthetic_data": true,
+  "real_mosp_experimental_instances_provided": false
+}

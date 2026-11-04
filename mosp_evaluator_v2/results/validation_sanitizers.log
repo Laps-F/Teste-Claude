@@ -1,0 +1,28 @@
+make check BUILD=build-sanitize CXXFLAGS="-O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined" LDFLAGS="-fsanitize=address,undefined"
+make[1]: Entering directory '/workspace/scratch/6e9abd217286/mosp_evaluator_v2'
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined -c src/adaptive.cpp -o build-sanitize/adaptive.o
+ar rcs build-sanitize/libmosp_evaluator.a build-sanitize/evaluator.o build-sanitize/adaptive.o
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined tools/evaluate.cpp build-sanitize/libmosp_evaluator.a -fsanitize=address,undefined -pthread -o build-sanitize/mosp-evaluate
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined examples/pt_adapter.cpp build-sanitize/libmosp_evaluator.a -fsanitize=address,undefined -pthread -o build-sanitize/pt-example
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined examples/adaptive_pt.cpp build-sanitize/libmosp_evaluator.a -fsanitize=address,undefined -pthread -o build-sanitize/adaptive-pt-example
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined tests/test_evaluator.cpp build-sanitize/libmosp_evaluator.a -fsanitize=address,undefined -pthread -o build-sanitize/test-evaluator
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined tests/test_allocations.cpp build-sanitize/libmosp_evaluator.a -fsanitize=address,undefined -pthread -o build-sanitize/test-allocations
+g++ -Iinclude -O1 -g -std=c++17 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -fsanitize=address,undefined tests/test_adaptive.cpp build-sanitize/libmosp_evaluator.a -fsanitize=address,undefined -pthread -o build-sanitize/test-adaptive
+build-sanitize/test-evaluator
+{"status":"PASS","exhaustive_move_scenarios":377856,"random_chained_scenarios":40000,"parallel_scenarios":8000,"parallel_workers":8,"serial_assertions":11201883}
+build-sanitize/test-allocations
+{"allocation_probe":"PASS","iterations":10000,"allocations_after_warmup":0,"checksum":2633620000}
+build-sanitize/test-adaptive
+{"status":"PASS","adaptive_chain_scenarios":14400,"shared_plan_parallel_scenarios":2400,"checks":264366}
+build-sanitize/pt-example
+{"status":"PASS","replicas":4,"proposals":12000,"accepted":8124,"rejected":3876,"worsening_accepted":1056,"exchanges":350}
+build-sanitize/adaptive-pt-example
+{"status":"PASS","energy":"mosp","backend":"full","proposals":12000,"accepted":6942,"rejected":5058,"worsening_accepted":778,"exchanges":218,"trajectory_hash":9268521355388061847}
+{"status":"PASS","energy":"mosp","backend":"incremental","proposals":12000,"accepted":6942,"rejected":5058,"worsening_accepted":778,"exchanges":218,"trajectory_hash":9268521355388061847}
+{"status":"PASS","energy":"mosp","backend":"auto","proposals":12000,"accepted":6942,"rejected":5058,"worsening_accepted":778,"exchanges":218,"trajectory_hash":9268521355388061847}
+{"status":"PASS","energy":"mmosp","backend":"full","proposals":12000,"accepted":6517,"rejected":5483,"worsening_accepted":2009,"exchanges":176,"trajectory_hash":9195654474554505231}
+{"status":"PASS","energy":"mmosp","backend":"incremental","proposals":12000,"accepted":6517,"rejected":5483,"worsening_accepted":2009,"exchanges":176,"trajectory_hash":9195654474554505231}
+{"status":"PASS","energy":"mmosp","backend":"auto","proposals":12000,"accepted":6517,"rejected":5483,"worsening_accepted":2009,"exchanges":176,"trajectory_hash":9195654474554505231}
+python3 tests/test_cli.py build-sanitize/mosp-evaluate
+{"cli_status": "PASS", "cli_cases": 22}
+make[1]: Leaving directory '/workspace/scratch/6e9abd217286/mosp_evaluator_v2'

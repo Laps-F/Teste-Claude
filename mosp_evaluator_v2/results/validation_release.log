@@ -1,0 +1,25 @@
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic -c src/adaptive.cpp -o build/adaptive.o
+ar rcs build/libmosp_evaluator.a build/evaluator.o build/adaptive.o
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic tools/evaluate.cpp build/libmosp_evaluator.a  -pthread -o build/mosp-evaluate
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic examples/pt_adapter.cpp build/libmosp_evaluator.a  -pthread -o build/pt-example
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic examples/adaptive_pt.cpp build/libmosp_evaluator.a  -pthread -o build/adaptive-pt-example
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic tests/test_evaluator.cpp build/libmosp_evaluator.a  -pthread -o build/test-evaluator
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic tests/test_allocations.cpp build/libmosp_evaluator.a  -pthread -o build/test-allocations
+g++ -Iinclude -O3 -std=c++17 -Wall -Wextra -Wpedantic tests/test_adaptive.cpp build/libmosp_evaluator.a  -pthread -o build/test-adaptive
+build/test-evaluator
+{"status":"PASS","exhaustive_move_scenarios":377856,"random_chained_scenarios":40000,"parallel_scenarios":8000,"parallel_workers":8,"serial_assertions":11201883}
+build/test-allocations
+{"allocation_probe":"PASS","iterations":10000,"allocations_after_warmup":0,"checksum":2633620000}
+build/test-adaptive
+{"status":"PASS","adaptive_chain_scenarios":14400,"shared_plan_parallel_scenarios":2400,"checks":264366}
+build/pt-example
+{"status":"PASS","replicas":4,"proposals":12000,"accepted":8124,"rejected":3876,"worsening_accepted":1056,"exchanges":350}
+build/adaptive-pt-example
+{"status":"PASS","energy":"mosp","backend":"full","proposals":12000,"accepted":6942,"rejected":5058,"worsening_accepted":778,"exchanges":218,"trajectory_hash":9268521355388061847}
+{"status":"PASS","energy":"mosp","backend":"incremental","proposals":12000,"accepted":6942,"rejected":5058,"worsening_accepted":778,"exchanges":218,"trajectory_hash":9268521355388061847}
+{"status":"PASS","energy":"mosp","backend":"auto","proposals":12000,"accepted":6942,"rejected":5058,"worsening_accepted":778,"exchanges":218,"trajectory_hash":9268521355388061847}
+{"status":"PASS","energy":"mmosp","backend":"full","proposals":12000,"accepted":6517,"rejected":5483,"worsening_accepted":2009,"exchanges":176,"trajectory_hash":9195654474554505231}
+{"status":"PASS","energy":"mmosp","backend":"incremental","proposals":12000,"accepted":6517,"rejected":5483,"worsening_accepted":2009,"exchanges":176,"trajectory_hash":9195654474554505231}
+{"status":"PASS","energy":"mmosp","backend":"auto","proposals":12000,"accepted":6517,"rejected":5483,"worsening_accepted":2009,"exchanges":176,"trajectory_hash":9195654474554505231}
+python3 tests/test_cli.py build/mosp-evaluate
+{"cli_status": "PASS", "cli_cases": 22}

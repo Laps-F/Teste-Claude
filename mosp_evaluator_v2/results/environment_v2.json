@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-29",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "flags": "-O3 -std=c++17 -Wall -Wextra -Wpedantic; no -march=native, no LTO",
+  "threads_per_timed_run": 1,
+  "matrix_seed": 20261030,
+  "repetitions": 3,
+  "source": "synthetic",
+  "acceptance": "prescribed exactly 50%; independent of energy",
+  "raw_rows": 972,
+  "median_rows": 324
+}

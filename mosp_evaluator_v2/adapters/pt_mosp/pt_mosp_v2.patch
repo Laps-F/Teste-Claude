@@ -1,0 +1,1092 @@
+--- a/MOSP/MOSP.h
++++ b/MOSP/MOSP.h
+@@ -1,71 +1,66 @@
+-
++// PT-MOSP adapter for MOSP Evaluator 2.0.0; generated with Codex, 2026-10-29.
++// Original PT-MOSP authors retain ownership of their code.
+ #ifndef __MOSP_H__
+ #define __MOSP_H__
+-
+-#include <string.h>
+-#include <fstream>
+-#include <iostream>
+-#include <sstream>
+-#include <vector>
+-#include <queue>
+-#include <utility>
+-#include <forward_list>
+-#include <list>
+-#include <set>
+-#include <map>
+-#include <omp.h>
+-#include <limits.h>
+-#include <random>
+-#include <cmath>
+-#include <algorithm>
+-#include <iterator>
+-#include <iostream>
+-#include <thread>
+ #include <atomic>
+ #include <bitset>
++#include <fstream>
++#include <memory>
++#include <random>
++#include <string>
++#include <vector>
+ #include "../PTAPI-main/include/Problem.h"
++#include "mosp_evaluator/include/mosp/adaptive.hpp"
+ 
+-
+-struct solMOSP: public solution{ 
+-  std::vector<int> sol; 
+-  int maxNumberPiecesPerPatern;
+-  int construcTime;
++struct solMOSP : public solution {
++    std::vector<int> sol;
++    int maxNumberPiecesPerPatern = 0;
++    int construcTime = 0;
++    int mospValue = 0;
++    std::int64_t totalOpen = 0;
++    std::uint64_t evaluationTicket = 0;
++    bool hasMove = false;
++    mosp::Move move = mosp::Move::swap(0,0);
+ };
+ 
+-
+-class MOSP: public Problem<solMOSP>{
+-	private:
+-
+-		int sequenceForm;
+-		int numberPatterns;
+-		int numberPieces;
+-		int maxNumberPiecesPerPatern;
+-		int neighborStrt;
+-		int constructSolutionTime;
+-		std::atomic<int> constructionCallIndex{0};
+-		
+-		std::string fn;
+-		std::vector<int> stackSizeEvaluation;
+-		std::vector<std::vector<int>> patternPieces;
+-    	std::vector<std::bitset<1000>> patternBitsets;
+-		std::vector<std::vector<int>> patternsPorPeca;
+-		
+-	public:
+-		MOSP(std::string filename, int readForm, int neighborStrategy, int sequenceForm);
+-		~MOSP();
+-		solMOSP construction();
+-		solMOSP neighbor(solMOSP sol);
+-		solMOSP neighborSwap(solMOSP sol);
+-		solMOSP neighbor2Opt(solMOSP sol);
+-		solMOSP neighborInsertion(solMOSP sol);
+-		double evaluate(solMOSP& sol);
+-
+-		// Getters for VND
+-		int getNumberPieces() { return numberPieces; }
+-		int getNumberPatterns() { return numberPatterns; }
+-		const std::vector<int>& getStackSizeEvaluation() { return stackSizeEvaluation; }
+-		const std::vector<std::vector<int>>& getPatternPieces() { return patternPieces; }
+-		const std::vector<std::bitset<1000>>& getPatternBitsets() { return patternBitsets; }
++class MOSPEvaluationSession;
++class MOSP : public Problem<solMOSP> {
++private:
++    int sequenceForm, numberPatterns, numberPieces;
++    int maxNumberPiecesPerPatern = 0, neighborStrt, readForm_;
++    std::atomic<int> constructSolutionTime{0}, constructionCallIndex{0};
++    std::atomic<std::uint64_t> nextTicket{1};
++    std::string fn;
++    std::vector<int> stackSizeEvaluation;
++    std::vector<std::vector<int>> patternPieces;
++    std::vector<std::bitset<1000>> patternBitsets;
++    mosp::Instance::Ptr instance_;
++    mosp::ItemOrderDecoder::Data::Ptr decoderData_;
++    mosp::SelectionPlan::Ptr plan_;
++    mosp::Backend backend_;
++    mosp::Energy energy_;
++    bool audit_;
++    std::atomic<std::uint64_t> fullEvaluations{0}, incrementalEvaluations{0};
++    std::atomic<std::uint64_t> localApplications{0}, exchangeSynchronizations{0}, auditedEvaluations{0};
++    friend class MOSPEvaluationSession;
++public:
++    MOSP(std::string filename, int readForm, int neighborStrategy, int sequenceForm,
++         mosp::Backend backend = mosp::Backend::Auto,
++         mosp::Energy energy = mosp::Energy::MOSP, bool audit = false);
++    ~MOSP() override = default;
++    solMOSP construction() override;
++    solMOSP neighbor(solMOSP sol) override;
++    solMOSP neighborSwap(solMOSP sol);
++    solMOSP neighbor2Opt(solMOSP sol);
++    solMOSP neighborInsertion(solMOSP sol);
++    double evaluate(solMOSP& sol) override;
++    std::unique_ptr<EvaluationSession<solMOSP>> makeEvaluationSession(const solMOSP& initial) override;
++    std::vector<int> patternOrder(const solMOSP& sol) const;
++    void writeMetadata(std::ostream& output, const solMOSP& sol, double seconds) const;
++    int getNumberPieces() const { return numberPieces; }
++    int getNumberPatterns() const { return numberPatterns; }
++    const std::vector<int>& getStackSizeEvaluation() const { return stackSizeEvaluation; }
++    const std::vector<std::vector<int>>& getPatternPieces() const { return patternPieces; }
++    const std::vector<std::bitset<1000>>& getPatternBitsets() const;
+ };
+-
+-#endif 
++#endif
+--- a/MOSP/MOSP.cpp
++++ b/MOSP/MOSP.cpp
+@@ -1,150 +1,186 @@
++// PT-MOSP adapter for MOSP Evaluator 2.0.0; generated with Codex, 2026-10-29.
++// Original PT-MOSP authors retain ownership of their code.
+ #include "MOSP.h"
+ #include "MCNH/HNCM.h"
+-
++#include <algorithm>
++#include <chrono>
++#include <iomanip>
++#include <limits>
++#include <numeric>
++#include <stdexcept>
++#include <cstring>
+ using namespace std;
+ 
+-MOSP::MOSP(std::string filename, int readForm, int neighborStrategy, int inSequenceForm){
+-    neighborStrt = neighborStrategy;
+-	fn = filename;
+-    sequenceForm = inSequenceForm;
+-    std::ifstream file(filename);
+-	std::string line; 
+-	
+-    if(!file.is_open()){
+-        std::cout << "Could not open file! \n";
+-        return;
+-    }	
+-
+-    file >> numberPatterns >> numberPieces;
+-    // file >> numberPieces >> numberPatterns;
+-
+-
+-    patternPieces.resize(numberPatterns);
+-    stackSizeEvaluation.resize(numberPieces, 0);
+-    maxNumberPiecesPerPatern = 0;
+-    constructSolutionTime = 0;
+-
+-    if(readForm){ //leitura arquivos do rafael
+-        for (int j = 0; j < numberPatterns; j++) {
+-            for (int i = 0; i < numberPieces; i++) {
+-                int value;
+-                file >> value;
+-                if (value == 1) {
+-                    patternPieces[j].push_back(i); // armazena o índice da peça (j) associada ao padrão (i)
+-                    stackSizeEvaluation[i]++; //armazenam a quantidade de vezes que cada peça aparece nos padrões
+-                }
+-            }
+-        }
+-    } else { // leitura dos outros arquivos
+-        for (int i = 0; i < numberPieces; i++) {
+-            for (int j = 0; j < numberPatterns; j++) {
+-                int value;
+-                file >> value;
+-                if (value == 1) {
+-                    patternPieces[j].push_back(i); // armazena o índice da peça (j) associada ao padrão (i)
+-                    stackSizeEvaluation[i]++; //armazenam a quantidade de vezes que cada peça aparece nos padrões
+-                }
+-            }
+-        }
+-    }
+-
+-    for (int j = 0; j < numberPatterns; j++)
+-        if(patternPieces[j].size() > maxNumberPiecesPerPatern){
+-            maxNumberPiecesPerPatern = patternPieces[j].size();
+-        }
+-
+-    patternBitsets.resize(numberPatterns);
+-
+-    if(sequenceForm){
+-        for (int i = 0; i < numberPatterns; i++) {
+-            for (int p : patternPieces[i]) {
+-                patternBitsets[i].set(p);
+-            }
+-        }
+-
+-        patternsPorPeca.resize(numberPieces);
+-        for (int pattern = 0; pattern < numberPatterns; ++pattern) {
+-            for (int piece = 0; piece < numberPieces; ++piece) {
+-                if (patternBitsets[pattern].test(piece)) {
+-                    patternsPorPeca[piece].push_back(pattern);
+-                }
+-            }
+-        }
+-    }
+-
+-    file.close();
+-}
+-
+-MOSP::~MOSP(){	
+-}
+-
+-solMOSP MOSP::construction() {
+-    int idx = constructionCallIndex.fetch_add(1);
+-
++namespace {
++void setMetrics(solMOSP& sol, mosp::Metrics metrics, mosp::Energy energy) {
++    sol.mospValue=metrics.max_open;sol.totalOpen=metrics.total_open;
++    sol.evalSol=metrics.energy(energy);
++}
++}
++
++class MOSPEvaluationSession : public EvaluationSession<solMOSP> {
++    MOSP& problem_;
++    mosp::ItemOrderDecoder decoder_;
++    mosp::AdaptiveEvaluator evaluator_;
++    mosp::Evaluator auditEvaluator_;
++    std::uint64_t pendingTicket_=0;
++    mosp::Move pendingMove_=mosp::Move::swap(0,0);
++    bool pendingHasMove_=false;
++    std::vector<int> pendingPatterns_;
++public:
++    MOSPEvaluationSession(MOSP& problem,const solMOSP& initial)
++        :problem_(problem),decoder_(problem.decoderData_),
++         evaluator_(problem.instance_,problem.patternOrder(initial),problem.backend_,problem.plan_),
++         auditEvaluator_(problem.instance_){}
++    double evaluate(solMOSP& candidate) override {
++        const auto oldCounts=evaluator_.counts();
++        const bool byMove=!problem_.sequenceForm && candidate.hasMove;
++        mosp::Metrics result;
++        if(byMove) result=evaluator_.evaluate(candidate.move);
++        else {
++            pendingPatterns_=problem_.sequenceForm?decoder_.decode(candidate.sol):candidate.sol;
++            result=evaluator_.evaluate(pendingPatterns_);
++        }
++        const auto counts=evaluator_.counts();
++        problem_.fullEvaluations.fetch_add(counts.full-oldCounts.full,std::memory_order_relaxed);
++        problem_.incrementalEvaluations.fetch_add(counts.incremental-oldCounts.incremental,std::memory_order_relaxed);
++        pendingTicket_=candidate.evaluationTicket;pendingMove_=candidate.move;pendingHasMove_=byMove;
++        if(problem_.audit_){
++            const auto order=problem_.patternOrder(candidate);
++            if(auditEvaluator_.evaluate_metrics(order)!=result)throw std::logic_error("PT-MOSP: candidate audit mismatch");
++            problem_.auditedEvaluations.fetch_add(1,std::memory_order_relaxed);
++        }
++        candidate.construcTime=problem_.constructSolutionTime.load();
++        setMetrics(candidate,result,problem_.energy_);
++        return candidate.evalSol;
++    }
++    void accepted(const solMOSP& candidate) override {
++        mosp::Metrics result;
++        if(pendingTicket_ && pendingTicket_==candidate.evaluationTicket){
++            result=pendingHasMove_?evaluator_.apply(pendingMove_):evaluator_.apply(pendingPatterns_);
++            problem_.localApplications.fetch_add(1,std::memory_order_relaxed);
++        }else{
++            result=evaluator_.apply(problem_.patternOrder(candidate));
++            problem_.exchangeSynchronizations.fetch_add(1,std::memory_order_relaxed);
++        }
++        pendingTicket_=0;
++        if(result.max_open!=candidate.mospValue || result.total_open!=candidate.totalOpen ||
++           result.energy(problem_.energy_)!=candidate.evalSol)
++            throw std::logic_error("PT-MOSP: accepted energy/state mismatch");
++    }
++};
++
++MOSP::MOSP(std::string filename,int readForm,int neighborStrategy,int inSequenceForm,
++           mosp::Backend backend,mosp::Energy energy,bool audit)
++    :sequenceForm(inSequenceForm),neighborStrt(neighborStrategy),readForm_(readForm),
++     fn(std::move(filename)),backend_(backend),energy_(energy),audit_(audit){
++    if((readForm!=0&&readForm!=1)||(sequenceForm!=0&&sequenceForm!=1)||neighborStrt<0||neighborStrt>2)
++        throw std::invalid_argument("PT-MOSP: invalid read/sequence/movement option");
++    mosp::backend_name(backend_);mosp::energy_name(energy_);
++    std::ifstream file(fn);long long n=0,m=0;
++    if(!(file>>n>>m)||n<0||m<0||n>INT_MAX||m>INT_MAX)
++        throw std::invalid_argument("PT-MOSP: invalid file or dimensions");
++    numberPatterns=static_cast<int>(n);numberPieces=static_cast<int>(m);
++    if(m && static_cast<std::size_t>(n)>std::numeric_limits<std::size_t>::max()/static_cast<std::size_t>(m))
++        throw std::length_error("PT-MOSP: matrix dimensions overflow");
++    std::vector<int> entries(static_cast<std::size_t>(n)*static_cast<std::size_t>(m));
++    for(auto& value:entries)if(!(file>>value))throw std::invalid_argument("PT-MOSP: incomplete matrix");
++    std::string extra;if(file>>extra)throw std::invalid_argument("PT-MOSP: extra data after matrix");
++    instance_=mosp::Instance::from_dense(readForm?static_cast<std::size_t>(n):static_cast<std::size_t>(m),
++        readForm?static_cast<std::size_t>(m):static_cast<std::size_t>(n),entries,
++        readForm?mosp::MatrixAxis::PatternsInRows:mosp::MatrixAxis::PatternsInColumns,mosp::Presence::EqualToOne);
++    patternPieces=instance_->patterns();stackSizeEvaluation.assign(static_cast<std::size_t>(m),0);
++    for(const auto& items:patternPieces){
++        maxNumberPiecesPerPatern=std::max(maxNumberPiecesPerPatern,static_cast<int>(items.size()));
++        for(int x:items)++stackSizeEvaluation[static_cast<std::size_t>(x)];
++    }
++    if(numberPieces<=1000){
++        patternBitsets.resize(static_cast<std::size_t>(n));
++        for(std::size_t j=0;j<patternPieces.size();++j)for(int x:patternPieces[j])patternBitsets[j].set(static_cast<std::size_t>(x));
++    }
++    decoderData_=mosp::ItemOrderDecoder::Data::create(instance_);
++    if(backend_==mosp::Backend::Auto){
++        mosp::Permutation initial(static_cast<std::size_t>(n));std::iota(initial.begin(),initial.end(),0);
++        plan_=mosp::SelectionPlan::calibrate(instance_,initial);
++    }
++}
++
++const std::vector<std::bitset<1000>>& MOSP::getPatternBitsets() const {
++    if(numberPieces>1000)throw std::length_error("PT-MOSP: legacy bitset getter supports at most 1000 items; evaluator/decoder are dynamic");
++    return patternBitsets;
++}
++std::vector<int> MOSP::patternOrder(const solMOSP& sol) const {
++    if(!sequenceForm)return sol.sol;
++    mosp::ItemOrderDecoder decoder(decoderData_);return decoder.decode(sol.sol);
++}
++std::unique_ptr<EvaluationSession<solMOSP>> MOSP::makeEvaluationSession(const solMOSP& initial){
++    return std::unique_ptr<EvaluationSession<solMOSP>>(new MOSPEvaluationSession(*this,initial));
++}
++double MOSP::evaluate(solMOSP& sol){
++    mosp::Evaluator evaluator(instance_);setMetrics(sol,evaluator.evaluate_metrics(patternOrder(sol)),energy_);
++    sol.construcTime=constructSolutionTime.load();return sol.evalSol;
++}
++
++solMOSP MOSP::construction(){
++    const int idx=constructionCallIndex.fetch_add(1);
+     solMOSP ss;
+-
+-    if(idx == 0 || idx == 2){
+-         int* solution = nullptr;
+-        int resultHNCM, solutionSize = 0;	
+-        double timeHNCM;
+-
+-        char* filename = new char[fn.size() + 1];
+-        strcpy(filename, fn.c_str());
+-
+-        if(sequenceForm){
+-            mainMethod(&resultHNCM, &timeHNCM, filename, &solution, &solutionSize, 1); //peças
+-        } else {
+-            mainMethod(&resultHNCM, &timeHNCM, filename, &solution, &solutionSize, 0); //padroes
+-        }
+-
+-        // std::cout << "Debug: mainMethod retornou solutionSize = " << solutionSize << std::endl;
+-        // for(int i = 0; i < solutionSize; i++) {
+-        //     std::cout<<solution[i]<<", ";
+-        // }std::cout<<"."<<std::endl;
+-
+-        constructSolutionTime += timeHNCM;
+-
+-        for(int i = 0; i < solutionSize; i++) {
+-            ss.sol.push_back(solution[i]);
+-        }
+-
+-        delete[] solution;
+-    } else {
+-        std::random_device rnd_device;
+-        std::mt19937 mersenne_engine {rnd_device()};
+-
+-        if(sequenceForm){
+-            for (int i = 0; i < numberPieces; i++) {
+-                ss.sol.push_back(i);
+-            }
+-        } else {
+-            for (int i = 0; i < numberPatterns; i++) {
+-                ss.sol.push_back(i);
+-            }
+-        }
+-
+-        std::shuffle(begin(ss.sol), end(ss.sol), mersenne_engine);
+-    }
+-
+-    ss.evalSol = evaluate(ss);
+-    ss.maxNumberPiecesPerPatern = maxNumberPiecesPerPatern;
+-	ss.Nup = false;
+-	ss.Ndown = false;
+-
+-	return ss;
++    if((idx==0||idx==2)&&numberPatterns>0&&numberPieces>0){
++        int* raw=nullptr;int result=0,size=0;double seconds=0;
++        std::vector<char> filename(fn.begin(),fn.end());filename.push_back('\0');
++        mainMethod(&result,&seconds,filename.data(),&raw,&size,sequenceForm,readForm_);
++        std::unique_ptr<int[]> holder(raw);
++        if(sequenceForm)ss.sol.assign(raw,raw+size);
++        else {
++            const int nonempty=static_cast<int>(std::count_if(patternPieces.begin(),patternPieces.end(),[](const auto& p){return !p.empty();}));
++            if(size!=numberPatterns)throw std::logic_error("MCNH: incomplete pattern solution");
++            ss.sol.assign(raw,raw+nonempty);
++            for(int j=0;j<numberPatterns;++j)if(patternPieces[static_cast<std::size_t>(j)].empty())ss.sol.push_back(j);
++        }
++        constructSolutionTime.fetch_add(static_cast<int>(std::min(seconds*1000.0,static_cast<double>(INT_MAX))));
++    }else{
++        ss.sol.resize(static_cast<std::size_t>(sequenceForm?numberPieces:numberPatterns));
++        std::iota(ss.sol.begin(),ss.sol.end(),0);
++        std::mt19937 generator(std::random_device{}());std::shuffle(ss.sol.begin(),ss.sol.end(),generator);
++    }
++    ss.evaluationTicket=nextTicket.fetch_add(1);ss.maxNumberPiecesPerPatern=maxNumberPiecesPerPatern;
++    ss.evalSol=evaluate(ss);ss.Nup=false;ss.Ndown=false;
++    return ss;
+ }
+ 
+ solMOSP MOSP::neighbor(solMOSP sol){
+-    switch (neighborStrt) {
+-        case 0:
+-            return neighborSwap(sol);
+-        case 1:
+-            return neighbor2Opt(sol);
+-        case 2:
+-            return neighborInsertion(sol);
+-        default:
+-            return sol;  // Retorna a mesma solução se tipo inválido
+-    }
++    solMOSP result;
++    if(sol.sol.size()<2)result=sol;
++    else if(neighborStrt==0)result=neighborSwap(sol);
++    else if(neighborStrt==1)result=neighbor2Opt(sol);
++    else result=neighborInsertion(sol);
++    result.evaluationTicket=nextTicket.fetch_add(1);
++    if(sol.sol.size()<2)result.hasMove=false;
++    return result;
++}
++
++void MOSP::writeMetadata(std::ostream& out,const solMOSP& sol,double seconds) const {
++    const auto order=patternOrder(sol);
++    mosp::Evaluator verifier(instance_);const auto metrics=verifier.evaluate_metrics(order);
++    if(metrics.max_open!=sol.mospValue||metrics.total_open!=sol.totalOpen||metrics.energy(energy_)!=sol.evalSol)
++        throw std::logic_error("PT-MOSP: final solution verification failed");
++    out<<std::setprecision(17)<<"{\"library_version\":\"2.0.0\",\"mosp\":"<<metrics.max_open
++       <<",\"total_open\":"<<metrics.total_open<<",\"mmosp\":"<<metrics.mmosp()
++       <<",\"energy\":"<<sol.evalSol<<",\"energy_mode\":\""<<mosp::energy_name(energy_)
++       <<"\",\"evaluator\":\""<<mosp::backend_name(backend_)<<"\",\"sequence\":\""<<(sequenceForm?"items":"patterns")
++       <<"\",\"density\":"<<instance_->density()<<",\"wall_seconds\":"<<seconds
++       <<",\"calibration_seconds\":"<<(plan_?plan_->calibration_seconds():0)
++       <<",\"full_evaluations\":"<<fullEvaluations.load()<<",\"incremental_evaluations\":"<<incrementalEvaluations.load()
++       <<",\"local_applications\":"<<localApplications.load()<<",\"exchange_synchronizations\":"<<exchangeSynchronizations.load()
++       <<",\"audited_evaluations\":"<<auditedEvaluations.load()<<",\"solution\":[";
++    for(std::size_t i=0;i<sol.sol.size();++i)out<<(i?",":"")<<sol.sol[i];
++    out<<"],\"pattern_sequence\":[";for(std::size_t i=0;i<order.size();++i)out<<(i?",":"")<<order[i];
++    out<<"],\"selection\":[";
++    if(plan_){bool first=true;for(const auto& d:plan_->decisions()){
++        if(!first)out<<',';
++        first=false;out<<"{\"input\":"<<static_cast<int>(d.input)<<",\"max_interval\":"<<d.max_interval
++          <<",\"backend\":\""<<mosp::backend_name(d.backend)<<"\",\"full_ns\":"<<d.full_ns<<",\"incremental_ns\":"<<d.incremental_ns<<'}';
++    }}
++    out<<"]}\n";
+ }
+ 
+ // 2-opt neighbor moviment
+@@ -183,6 +219,7 @@
+         } while (pattern1 == pattern2); 
+         
+         if(pattern1 > pattern2) std::swap(pattern1, pattern2);
++        s.hasMove=true;s.move=mosp::Move::reverse(pattern1,pattern2);
+     
+         while(pattern1 < pattern2) {
+             std::swap(s.sol[pattern1], s.sol[pattern2]);
+@@ -229,6 +266,7 @@
+         } while (pattern1 == pattern2);
+     
+         std::swap(s.sol[pattern1], s.sol[pattern2]);
++        s.hasMove=true;s.move=mosp::Move::swap(pattern1,pattern2);
+     }
+ 
+     s.Nup = sol.Nup;
+@@ -282,6 +320,7 @@
+         }
+     
+         s.sol.insert(s.sol.begin() + patternTo, element);
++        s.hasMove=true;s.move=mosp::Move::insert(patternFrom,patternTo);
+     }
+ 
+     s.Nup = sol.Nup;
+@@ -290,65 +329,3 @@
+     return s;
+ }
+ 
+-double MOSP::evaluate(solMOSP& sol) {
+-    
+-    sol.construcTime = constructSolutionTime;
+-    
+-    std::vector<int> patternSequence;
+-    
+-    if (sequenceForm) {
+-        std::bitset<1000> piecesRead;
+-        std::bitset<1000> patternUsed;
+-
+-        for (int piece : sol.sol) {
+-            piecesRead.set(piece);
+-            const auto& candidatos = patternsPorPeca[piece];
+-            auto notRead = ~piecesRead;
+-            
+-
+-            for (int pattern : candidatos) {
+-                if (!patternUsed.test(pattern) &&
+-                    (patternBitsets[pattern] & notRead).none()) {
+-                    patternSequence.push_back(pattern);
+-                    patternUsed.set(pattern);
+-                }
+-            }
+-        }
+-    } else {
+-        patternSequence = sol.sol;
+-    }
+-
+-    const int OPEN = 1, CLOSED = 0;
+-
+-    std::vector<int> stack(numberPieces, CLOSED);
+-    std::vector<int> vet = stackSizeEvaluation;
+-
+-    int openStacks = 0;
+-    int closedStacks = 0;
+-    int maxOpenStacks = -1;
+-
+-    for (int index : patternSequence) {
+-        for (int peca : patternPieces[index]) {
+-            vet[peca]--;
+-
+-            if (stack[peca] == CLOSED) {
+-                openStacks++;
+-                stack[peca] = OPEN;
+-            }
+-
+-            if (vet[peca] == 0) {
+-                closedStacks++;
+-                stack[peca] = CLOSED;
+-            }
+-        }
+-
+-        if (openStacks > maxOpenStacks) {
+-            maxOpenStacks = openStacks;
+-        }
+-
+-        openStacks -= closedStacks;
+-        closedStacks = 0;
+-    }
+-
+-    return maxOpenStacks;
+-}
+--- a/MOSP/mainMOSP.cpp
++++ b/MOSP/mainMOSP.cpp
+@@ -1,106 +1,62 @@
+-#include <cstdlib>
++// PT-MOSP evaluator integration, generated with Codex, 2026-10-29.
++#include <chrono>
+ #include <filesystem>
+-#include "../PTAPI-main/include/ExecTime.h"
+-#include "./MOSP.h"
++#include <fstream>
++#include <iostream>
++#include <map>
++#include <sstream>
++#include "MOSP.h"
+ #include "../PTAPI-main/include/PT.h"
+ #include "results.h"
+ 
+-using namespace std;
+-
+-int main(int argc, char* argv[])
+-{
+-	//varibles
+-    int exec = 0;
+-	float tempIni = 0.01;
+-	float tempfim = 10;
+-	int tempN = 11;
+-	int MCL = 600;
+-	int PTL = 2000;	
+-	int tempUp = 400;
+-	int tempD = 2;
+-	int uType = 3;
+-    int mType = 2;
+-    int read = 1;
+-    int sequence = 1;
+-	// int thN = thread::hardware_concurrency();	
+-	int thN = 12;	
+-
+-    string outDir = "resultados";
+-
+-	// int thN = 11;
+-	vector<string> arguments(argv + 1, argv + argc);	
+-	
+-	// Instance file name
+-	string fn = arguments[0];
+-	
+-	// Read arguments
+-	for(unsigned int i=1; i<arguments.size(); i+=2)
+-	{
+-		            
+-        if(arguments[i]== "--TEMP_FIM")
+-            tempfim = stof(arguments[i+1]);
+-        else if(arguments[i]== "--TEMP_INIT")
+-            tempIni = stof(arguments[i+1]);
+-        else if(arguments[i]== "--N_REPLICAS")
+-            tempN = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--MCL")
+-            MCL  = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--PTL")
+-            PTL = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--TEMP_DIST")
+-            tempD = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--MOV_TYPE")
+-            mType = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--TYPE_UPDATE")
+-            uType = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--TEMP_UPDATE"){
+-            int proportion = stoi(arguments[i+1]);
+-            tempUp = PTL / proportion;
++int main(int argc,char** argv){
++    try{
++        if(argc<2 || std::string(argv[1])=="--help"){
++            std::cout<<"Usage: mainMOSP_eval INSTANCE [--EVALUATOR full|incremental|auto] [--ENERGY mosp|mmosp]\n"
++                     <<"  --READ 1: patterns in rows; --READ 0: patterns in columns. Header is always patterns items.\n"
++                     <<"  --SEQUENCE 1: item order; --SEQUENCE 0: pattern order. --AUDIT 1 enables independent checking.\n"
++                     <<"  Remaining PT options keep their original names.\n";
++            return argc<2?2:0;
+         }
+-        else if(arguments[i]== "--THREAD_USED")
+-            thN = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--SEQUENCE")
+-            sequence = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--INST")
+-            exec = stoi(arguments[i+1]);
+-        else if(arguments[i]== "--OUTDIR")
+-            outDir = arguments[i+1];
+-    }
+-
+-    // Create PT subdirectory
+-    std::filesystem::create_directories(outDir + "/PT");
+-    outDir += "/PT";
+-
+-    // if(outDir == "Results/Frinhani" || outDir == "Results/Frinhani/temp") read = 1;
+-
+-    MOSP* prob = new MOSP(fn, read, mType, sequence);
+-    
+-    // Create and start PT 
+-
+-    PT<solMOSP> algo(tempIni, tempfim, tempN, MCL, PTL, 0, tempD, uType, tempUp);
+-
+-    ExecTime et;
+-    ResultPT<solMOSP> resultado = algo.start(thN, prob);
+-    solMOSP sol = resultado.best;             // pega a melhor solução
+-    int elapsed = et.getTimeMs();
+-    int trocas = resultado.numTrocas;   
+-    int construcTime = sol.construcTime;
+-    int execTime_ms = elapsed + construcTime;
+-    float execTime_s = execTime_ms / 1000;
+-
+-    SolResult res;
+-    res.evalSol = sol.evalSol;
+-    res.maxNumberPiecesPerPatern = sol.maxNumberPiecesPerPatern;
+-    res.sol = sol.sol;
+-    res.construcTime = construcTime;
+-
+-    saveResults(fn, res, execTime_ms, sol.ptl, outDir, exec, tempN);
+-
+-    // cout<<construcTime<<endl;
+-    // cout<<"Trocas: "<<sol.ptl<<endl; 
+-    // float resultForIrace = sol.evalSol + execTime_s/10000;
+-    // cout<<resultForIrace<<endl;
+-
+-	return 0;
++        std::map<std::string,std::string> options;
++        const std::vector<std::string> known={"--TEMP_INIT","--TEMP_FIM","--N_REPLICAS","--MCL","--PTL",
++            "--TEMP_DIST","--MOV_TYPE","--TYPE_UPDATE","--TEMP_UPDATE","--THREAD_USED","--SEQUENCE",
++            "--INST","--OUTDIR","--READ","--EVALUATOR","--ENERGY","--AUDIT"};
++        for(int i=2;i<argc;i+=2){
++            const std::string key=argv[i];
++            if(i+1>=argc || std::find(known.begin(),known.end(),key)==known.end() || !options.emplace(key,argv[i+1]).second)
++                throw std::invalid_argument("invalid/duplicate option or missing value: "+key);
++        }
++        auto get=[&](const char* key,const char* fallback){auto it=options.find(key);return it==options.end()?std::string(fallback):it->second;};
++        auto integer=[&](const char* key,const char* fallback){const auto s=get(key,fallback);std::size_t used=0;int v=std::stoi(s,&used);if(used!=s.size())throw std::invalid_argument(key);return v;};
++        auto real=[&](const char* key,const char* fallback){const auto s=get(key,fallback);std::size_t used=0;double v=std::stod(s,&used);if(used!=s.size()||!std::isfinite(v))throw std::invalid_argument(key);return v;};
++        const auto backend=mosp::parse_backend(get("--EVALUATOR","auto"));
++        const auto energy=mosp::parse_energy(get("--ENERGY","mosp"));
++        const int replicas=integer("--N_REPLICAS","11"),mcl=integer("--MCL","600"),ptl=integer("--PTL","2000");
++        const int threads=integer("--THREAD_USED","12"),update=integer("--TYPE_UPDATE","3");
++        const int dist=integer("--TEMP_DIST","2"),move=integer("--MOV_TYPE","2");
++        const int sequence=integer("--SEQUENCE","1"),read=integer("--READ","1"),exec=integer("--INST","0");
++        const int proportion=integer("--TEMP_UPDATE","5"),audit=integer("--AUDIT","0");
++        const double low=real("--TEMP_INIT","0.01"),high=real("--TEMP_FIM","10");
++        if(replicas<2||mcl<1||ptl<1||threads<1||threads>1024||proportion<1||update<0||update>3||dist<1||dist>4||
++           low<=0||high<=low||low<std::numeric_limits<float>::min()||high>std::numeric_limits<float>::max()||
++           (audit!=0&&audit!=1)||(update==3&&replicas<3))throw std::invalid_argument("invalid PT parameter range");
++        const auto start=std::chrono::steady_clock::now();
++        MOSP problem(argv[1],read,move,sequence,backend,energy,audit!=0);
++        PT<solMOSP> algorithm(static_cast<float>(low),static_cast<float>(high),replicas,mcl,ptl,0,dist,update,std::max(1,ptl/proportion));
++        const auto result=algorithm.start(threads,&problem);
++        const auto& sol=result.best;
++        const double seconds=std::chrono::duration<double>(std::chrono::steady_clock::now()-start).count();
++        const std::string directory=get("--OUTDIR","resultados")+"/PT/"+mosp::energy_name(energy)+"_"+mosp::backend_name(backend);
++        std::filesystem::create_directories(directory);
++        SolResult legacy;legacy.evalSol=sol.mospValue;legacy.maxNumberPiecesPerPatern=sol.maxNumberPiecesPerPatern;
++        legacy.sol=sol.sol;legacy.construcTime=sol.construcTime;
++        const int elapsed=static_cast<int>(std::min(seconds*1000.0,static_cast<double>(INT_MAX)));
++        saveResults(argv[1],legacy,elapsed,sol.ptl,directory,exec,replicas);
++        const std::string base=std::filesystem::path(argv[1]).stem().string();
++        std::ofstream metadata(directory+"/"+base+"("+std::to_string(exec)+")_res.json");
++        if(!metadata)throw std::runtime_error("cannot write PT-MOSP metadata");
++        problem.writeMetadata(metadata,sol,seconds);
++        problem.writeMetadata(std::cout,sol,seconds);
++    }catch(const std::exception& e){std::cerr<<"PT-MOSP: "<<e.what()<<'\n';return 2;}
+ }
+-
+--- a/MOSP/Makefile
++++ b/MOSP/Makefile
+@@ -33,8 +33,11 @@
+ all: $(TARGET) $(TARGET_BRKGA) $(TARGET_SND) $(TARGET_SA)
+ 
+ # Compilação
+-$(TARGET): $(SRC)
+-	$(CXX) $(SRC) $(CXXFLAGS) -o $(TARGET) 
++MOSP_EVALUATOR_FLAGS ?= -O3 -std=c++20 -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare
++MOSP_EVALUATOR_SOURCES = mosp_evaluator/src/evaluator.cpp mosp_evaluator/src/adaptive.cpp
++
++$(TARGET): $(SRC) MOSP.cpp MOSP.h $(MOSP_EVALUATOR_SOURCES) $(wildcard mosp_evaluator/include/mosp/*.hpp)
++	$(CXX) $(MOSP_EVALUATOR_FLAGS) -Imosp_evaluator/include $(SRC) MOSP.cpp $(MOSP_EVALUATOR_SOURCES) -pthread -o $(TARGET)
+ 
+ $(TARGET_BRKGA): $(SRC_BRKGA)
+ 	$(CXX) $(SRC_BRKGA) $(CXXFLAGS_BRKGA) -o $(TARGET_BRKGA) 
+--- a/MOSP/mosp_evaluator.mk
++++ b/MOSP/mosp_evaluator.mk
+@@ -0,0 +1,11 @@
++CXX ?= g++
++CXXFLAGS ?= -O3 -std=c++20 -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare
++LIBDIR := mosp_evaluator
++LIBSRC := $(LIBDIR)/src/evaluator.cpp $(LIBDIR)/src/adaptive.cpp
++LIBHEAD := $(wildcard $(LIBDIR)/include/mosp/*.hpp)
++
++.PHONY: all
++all: mainMOSP_eval
++
++mainMOSP_eval: mainMOSP.cpp MOSP.cpp MOSP.h results.h MCNH/HNCM.h MCNH/LinkedList.h $(LIBSRC) $(LIBHEAD) $(wildcard ../PTAPI-main/include/*.h)
++	$(CXX) $(CXXFLAGS) -I$(LIBDIR)/include mainMOSP.cpp MOSP.cpp $(LIBSRC) $(LDFLAGS) -pthread -o $@
+--- a/MOSP/MCNH/HNCM.h
++++ b/MOSP/MCNH/HNCM.h
+@@ -1,3 +1,4 @@
++// Modification: Codex, 2026-10-29. Added explicit matrix orientation; supplied at no charge.
+ /************************************************************************************************************************************************
+ * MINIMAL COST NODE HEURISTIC																				*
+ /************************************************************************************************************************************************
+@@ -241,7 +242,7 @@
+ /*
+ Reads the problem from a file specified by fileName
+ */
+-void readProblem(char *fileName)
++void readProblem(char *fileName, bool patternsInRows)
+ {
+ 	int i;
+ 	int j;
+@@ -260,18 +261,17 @@
+ 
+ 	initialization();										//initializes all structures, vectors and matrices
+ 	
+-	// for(j=nPieces-1; j>=0; j--)
+-	for(j=0; j<nPieces; j++)
+-	{
+-		for(i=0; i<nPatterns; i++)
+-		{
+-			fscanf(fpIn, "%d", &matrix[i][j]);
+-
+-			if(matrix[i][j] == 1)
+-				pattern[i].size++;
+-
+-		}
+-	}
++    if(patternsInRows){
++        for(i=0;i<nPatterns;++i)for(j=0;j<nPieces;++j){
++            if(fscanf(fpIn,"%d",&matrix[i][j])!=1)throw std::runtime_error("MCNH: invalid matrix");
++            if(matrix[i][j]==1)++pattern[i].size;
++        }
++    }else{
++        for(j=0;j<nPieces;++j)for(i=0;i<nPatterns;++i){
++            if(fscanf(fpIn,"%d",&matrix[i][j])!=1)throw std::runtime_error("MCNH: invalid matrix");
++            if(matrix[i][j]==1)++pattern[i].size;
++        }
++    }
+ 
+ 	fclose(fpIn);
+ }
+@@ -685,7 +685,7 @@
+ HNCMResult	stores the solution value obtained by the heuristic
+ HNCMTime		stores the exeution time of the heuristic
+ */
+-void mainMethod(int *HNCMResult, double *HNCMTime, char *inputFileName, int **externalSolution, int *externalSolutionSize, int pieces)
++void mainMethod(int *HNCMResult, double *HNCMTime, char *inputFileName, int **externalSolution, int *externalSolutionSize, int pieces, bool patternsInRows = false)
+ {
+ 	int i;
+ 	int j;
+@@ -705,7 +705,7 @@
+ 	// sprintf(outputFileName, "Solution_%s", baseName);
+ 	// fpSolution = fopen(outputFileName, "w");				//file that contains the information about the solution of a problem instance
+ 
+-	readProblem(inputFileName);								//reads the problem data
++	readProblem(inputFileName,patternsInRows);								//reads the problem data
+ 	startHNCM = clock();										//time taking
+ 
+     // dominationPreProcessing();								//preprocessing procedure, removes dominated patterns
+--- a/PTAPI-main/include/Problem.h
++++ b/PTAPI-main/include/Problem.h
+@@ -3,11 +3,13 @@
+ 
+ // #include <vector>
+ // #include <climits>
++#include <limits>
++#include <memory>
+ 
+ 
+ // struct solution{ 
+-//   double evalSol = INT_MAX; 
+-//   bool Nup,Ndown;
++//   double evalSol = std::numeric_limits<double>::infinity(); 
++//   bool Nup = false, Ndown = false;
+ // };
+ 
+ // template<typename S>
+@@ -16,7 +18,7 @@
+ // 		solution bestSol;
+ // 	public:
+ // 		Problem();
+-// 		~Problem();
++// 		virtual ~Problem();
+ // 		void setBestSol(S sol);
+ // 		virtual S construction()=0;
+ // 		virtual S neighbor(S sol)=0;
+@@ -43,13 +45,23 @@
+ 
+ #include <vector>
+ #include <climits>
++#include <limits>
++#include <memory>
+ 
+ 
+ struct solution{ 
+-  double evalSol = INT_MAX; 
++  double evalSol = std::numeric_limits<double>::infinity(); 
+   int ptl = -1;
+   int mcmc = -1;
+-  bool Nup,Ndown;
++  bool Nup = false, Ndown = false;
++};
++
++template<typename S>
++class EvaluationSession {
++public:
++    virtual ~EvaluationSession() = default;
++    virtual double evaluate(S& candidate) = 0;
++    virtual void accepted(const S& candidate) = 0;
+ };
+ 
+ template<typename S>
+@@ -58,11 +70,12 @@
+ 		solution bestSol;
+ 	public:
+ 		Problem();
+-		~Problem();
++		virtual ~Problem();
+ 		void setBestSol(S sol);
+ 		virtual S construction()=0;
+ 		virtual S neighbor(S sol)=0;
+ 		virtual double evaluate(S& sol)=0;
++        virtual std::unique_ptr<EvaluationSession<S>> makeEvaluationSession(const S&) { return nullptr; }
+ };
+ 
+ template<typename S>
+--- a/PTAPI-main/include/Node.h
++++ b/PTAPI-main/include/Node.h
+@@ -29,7 +29,7 @@
+ 		string nodeName;
+ 	public:
+ 		Node();
+-		~Node();
++		virtual ~Node();
+ 		virtual void run() = 0;
+ 		virtual bool ready() = 0;
+ 		virtual bool notify() = 0;
+--- a/PTAPI-main/include/NodeMCMC.h
++++ b/PTAPI-main/include/NodeMCMC.h
+@@ -17,6 +17,7 @@
+ 		Problem<S>* prob;
+ 		S sol;
+ 		S init;
++		std::unique_ptr<EvaluationSession<S>> evaluationSession;
+ 		S neigh;
+ 		S neighAux;
+ 		int accept = 0; 
+@@ -43,7 +44,7 @@
+ 		bool notify();
+ 		bool observer(Node* from);
+ 		double getTemp();
+-		int getEnergia();
++		double getEnergia();
+ 		double getAccept();
+ 		void start();
+ 		void setSolUp();
+@@ -75,6 +76,7 @@
+ 	sol = prob->construction();
+ 	init = sol;
+ 	bestSol = sol;
++    evaluationSession = prob->makeEvaluationSession(sol);
+ 	nodeName = nodeName_;
+ 	
+ 	#ifdef DEBUG
+@@ -97,7 +99,7 @@
+ 		neigh = prob->neighbor(sol);
+ 
+ 		// Calc evaluate function 
+-		neigh.evalSol = prob->evaluate(neigh); 
++		neigh.evalSol = evaluationSession ? evaluationSession->evaluate(neigh) : prob->evaluate(neigh); 
+ 		
+ 		// Save best sol
+ 		neigh.mcmc = i;
+@@ -110,7 +112,8 @@
+ 		// Less or equal to 0, accepted
+ 		if (delta <= 0.0){
+ 			// 
+-			sol = neigh;
++			if (evaluationSession) evaluationSession->accepted(neigh);
++            sol = neigh;
+ 			++accept;
+ 		}else{
+ 			//Calc of probability of acceptance
+@@ -120,7 +123,8 @@
+ 					
+ 			//Swap accept
+ 			if(dis(gen) <= probab){
+-				sol = neigh;
++				if (evaluationSession) evaluationSession->accepted(neigh);
++            sol = neigh;
+ 				++accept;
+ 			} //End if					
+ 		} //End if/else 				
+@@ -194,7 +198,7 @@
+ 
+ // Return the energy
+ template<typename S>
+-int NodeMCMC<S>::getEnergia(){
++double NodeMCMC<S>::getEnergia(){
+ 	return sol.evalSol;
+ }
+ 
+@@ -207,6 +211,7 @@
+ // Change current solution
+ template<typename S>
+ void NodeMCMC<S>::setSol(S sol_){
++    if (evaluationSession) evaluationSession->accepted(sol_);
+ 	sol = sol_;
+ 	setBestSol(sol);
+ }
+--- a/PTAPI-main/include/NodeSwap.h
++++ b/PTAPI-main/include/NodeSwap.h
+@@ -241,6 +241,8 @@
+ 
+ template<typename S>
+ NodeSwap<S>::~NodeSwap(){
++    delete replicaEstL;
++    delete replicaEstR;
+ }
+ 
+ template<typename S>
+--- a/PTAPI-main/include/Consumer.h
++++ b/PTAPI-main/include/Consumer.h
+@@ -21,16 +21,17 @@
+ 		atomic<int> bestV{INT_MAX};
+ 		atomic<int> indexPT{0};
+ 		atomic<int> maxDif{0};
+-		bool finish{true};
++		atomic_bool finish{true};
+ 		mutex mtxSol;
+ 		atomic_int end{0};
+-		int maxEnd{0};
++		atomic<int> maxEnd{0};
+ 		S bestSol;
+ 		vector<S> initAll;
+ 		S initFromBest;
+ 	public:		
+ 		Consumer(unsigned nTh);
+ 		void execAsync(Node* item);
++        void startWorkers();
+ 		void run(unsigned i);
+ 		void finished();
+ 		bool theEnd();
+@@ -58,6 +59,10 @@
+ 		buff.emplace_back();
+ 	}
+ 	
++}
++
++template<typename S>
++void Consumer<S>::startWorkers(){
+ 	for (unsigned n = 0; n != threadCount; ++n) {
+ 		threads.emplace_back([&, n]{ run(n); });
+ 	}
+--- a/PTAPI-main/include/PT.h
++++ b/PTAPI-main/include/PT.h
+@@ -22,7 +22,7 @@
+ template<typename S>
+ struct ResultPT {
+     S best;
+-    int numTrocas;
++    int numTrocas = 0;
+ };
+ 
+ template<typename S>
+@@ -100,20 +100,23 @@
+ 
+ template<typename S>
+ ResultPT<S> PT<S>::start(int thN, Problem<S>* prob){	
+-	Consumer<S>* consumer = new Consumer<S>(thN);
++	std::unique_ptr<Consumer<S>> consumer_owner(new Consumer<S>(thN));
++    Consumer<S>* consumer = consumer_owner.get();
++    std::vector<std::unique_ptr<Node>> ownedNodes;
+ 	atomic<int> PTLEnd = PTL_;
+ 	atomic<int> passoGatilhoAtomic = passoGatilho_;
+ 
+ 	//variaveis
+ 	Node* nMCMC;
+ 	Node* nSwap;
+-	Node* nUpTemp;	
++	Node* nUpTemp = nullptr;	
+ 	Node* nMCMCAux;
+ 	Node* nSwapAux;
+-	Node* nUpTempAux;
++	Node* nUpTempAux = nullptr;
+ 		    
+     // Creates the first MCMC node
+ 	nMCMC = new NodeMCMC<S>(MKL_,&PTLEnd,&passoGatilhoAtomic,allTemps.front(), prob, consumer, "MCMC1");
++    ownedNodes.emplace_back(nMCMC);
+ 	((NodeMCMC<S>*)nMCMC)->setFirstTemp(); // check First temp 
+ 	consumer->setMaxEnd();
+ 	allTemps.pop_front();
+@@ -121,16 +124,20 @@
+ 		
+     // Creates the second MCMC node
+ 	nMCMC = new NodeMCMC<S>(MKL_,&PTLEnd,&passoGatilhoAtomic,allTemps.front(), prob, consumer, "MCMC2");
++    ownedNodes.emplace_back(nMCMC);
+ 	consumer->setMaxEnd();
+ 	allTemps.pop_front();
+ 	
+ 	// Creates the first exchange node
+ 	if(!ut) {
+ 		nSwap = new NodeSwap<S>(nMCMC,nMCMCAux, consumer, &PTLEnd, "Swap1");
++    ownedNodes.emplace_back(nSwap);
+ 	}
+ 	else{ 
+ 		nUpTemp = new NodeTempUp<S>(nMCMC,nMCMCAux, NULL, consumer,ut, tempL_);
++    ownedNodes.emplace_back(nUpTemp);
+ 		nSwap = new NodeSwap<S>(nMCMC,nMCMCAux,nUpTemp, consumer, &PTLEnd, tempUpdate, "Swap1");	
++    ownedNodes.emplace_back(nSwap);
+ 	}
+ 	
+ 	consumer->setMaxEnd();
+@@ -163,17 +170,21 @@
+ 	int count = 0;	
+ 	while(!allTemps.empty()){
+ 		nMCMC = new NodeMCMC<S>(MKL_,&PTLEnd,&passoGatilhoAtomic,allTemps.front(),prob, consumer, "MCMC" + std::to_string(count+3));
++    ownedNodes.emplace_back(nMCMC);
+ 		consumer->setMaxEnd();
+ 		allTemps.pop_front();
+ 
+ 		// Creates the exchange node
+ 		if(!ut) {
+ 			nSwap = new NodeSwap<S>(nMCMC,nMCMCAux,consumer,&PTLEnd, "Swap" + std::to_string(count+2));
++    ownedNodes.emplace_back(nSwap);
+ 		}
+ 		else {
+ 			nUpTemp = new NodeTempUp<S>(nMCMC,nMCMCAux, nUpTempAux, consumer,ut, tempL_);
++    ownedNodes.emplace_back(nUpTemp);
+ 			((NodeTempUp<S>*)nUpTempAux)->setUpTempUp(nUpTemp);
+ 			nSwap = new NodeSwap<S>(nMCMC,nMCMCAux,nUpTemp,consumer, &PTLEnd, tempUpdate, "Swap" + std::to_string(count+2));
++    ownedNodes.emplace_back(nSwap);
+ 		}
+ 		
+ 		consumer->setMaxEnd();
+@@ -208,6 +219,7 @@
+ 	consumer->execAsync(nMCMCAux);
+ 
+ 
++consumer->startWorkers();
+ consumer->finished();
+ ResultPT<S> res;
+ res.best = consumer->getBestSol();

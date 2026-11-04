@@ -1,0 +1,120 @@
+g++  -O3 -std=c++20 -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Imosp_evaluator/include mainMOSP.cpp MOSP.cpp mosp_evaluator/src/evaluator.cpp mosp_evaluator/src/adaptive.cpp -pthread -o mainMOSP
+In file included from MOSP.cpp:4:
+MCNH/HNCM.h:4:1: warning: "/*" within comment [-Wcomment]
+    4 | /************************************************************************************************************************************************
+      |  
+MCNH/HNCM.h:9:1: warning: "/*" within comment [-Wcomment]
+    9 | /************************************************************************************************************************************************
+      |  
+MCNH/HNCM.h:20:1: warning: "/*" within comment [-Wcomment]
+   20 | /************************************************************************************************************************************************
+      |  
+In file included from MCNH/HNCM.h:38:
+MCNH/LinkedList.h:3:1: warning: "/*" within comment [-Wcomment]
+    3 | /************************************************************************************************************************************************
+      |  
+MCNH/LinkedList.h:8:1: warning: "/*" within comment [-Wcomment]
+    8 | /************************************************************************************************************************************************
+      |  
+MCNH/LinkedList.h:19:1: warning: "/*" within comment [-Wcomment]
+   19 | /************************************************************************************************************************************************
+      |  
+MCNH/LinkedList.h: In function ‘void add(typeList*, int)’:
+MCNH/LinkedList.h:81:30: warning: unused variable ‘control’ [-Wunused-variable]
+   81 |                 struct cell *control = (*list).first;
+      |                              ^~~~~~~
+MCNH/LinkedList.h:70:18: warning: unused variable ‘control’ [-Wunused-variable]
+   70 |     struct cell *control = list->first;
+      |                  ^~~~~~~
+MCNH/HNCM.h: In function ‘void readProblem(char*, bool)’:
+MCNH/HNCM.h:249:13: warning: unused variable ‘k’ [-Wunused-variable]
+  249 |         int k;
+      |             ^
+MCNH/HNCM.h: In function ‘void mainMethod(int*, double*, char*, int**, int*, int, bool)’:
+MCNH/HNCM.h:692:13: warning: unused variable ‘start’ [-Wunused-variable]
+  692 |         int start = 0;
+      |             ^~~~~
+MCNH/HNCM.h:693:13: warning: unused variable ‘end’ [-Wunused-variable]
+  693 |         int end;
+      |             ^~~
+MCNH/HNCM.h:695:13: warning: unused variable ‘result2’ [-Wunused-variable]
+  695 |         int result2;
+      |             ^~~~~~~
+MCNH/HNCM.h:696:9: warning: unused variable ‘resultb’ [-Wunused-variable]
+  696 |     int resultb;
+      |         ^~~~~~~
+MCNH/HNCM.h:701:10: warning: unused variable ‘outputFileName’ [-Wunused-variable]
+  701 |     char outputFileName[256];
+      |          ^~~~~~~~~~~~~~
+MCNH/HNCM.h:702:15: warning: unused variable ‘baseName’ [-Wunused-variable]
+  702 |         char *baseName = getBaseName(inputFileName);
+      |               ^~~~~~~~
+MCNH/HNCM.h: In function ‘void initialization()’:
+MCNH/HNCM.h:87:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   87 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:97:32: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   97 |                         system ("pause");
+      |                         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:106:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  106 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:114:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  114 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:122:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  122 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:130:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  130 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:138:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  138 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:146:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  146 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:154:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  154 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:162:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  162 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:172:32: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  172 |                         system ("pause");
+      |                         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:181:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  181 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:189:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  189 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:197:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  197 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:205:24: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  205 |                 system ("pause");
+      |                 ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:214:16: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  214 |         system ("pause");
+      |         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h:222:16: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  222 |         system ("pause");
+      |         ~~~~~~~^~~~~~~~~
+MCNH/HNCM.h: In function ‘void readProblem(char*, bool)’:
+MCNH/HNCM.h:257:15: warning: ignoring return value of ‘int fscanf(FILE*, const char*, ...)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  257 |         fscanf(fpIn, "%d %d", &nPatterns, &nPieces);
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MCNH/HNCM.h: In function ‘void HNCM()’:
+MCNH/HNCM.h:479:25: warning: ‘n1’ may be used uninitialized [-Wmaybe-uninitialized]
+  479 |         adjacencyMatrix[n1][n2]=0;
+      |                         ^~
+MCNH/HNCM.h:457:27: note: ‘n1’ was declared here
+  457 |     int omega, s=0, i, j, n1, n2, pairwise, openIndex = 0, arcIndex = 0;
+      |                           ^~
+MCNH/HNCM.h:479:29: warning: ‘n2’ may be used uninitialized [-Wmaybe-uninitialized]
+  479 |         adjacencyMatrix[n1][n2]=0;
+      |                             ^~
+MCNH/HNCM.h:457:31: note: ‘n2’ was declared here
+  457 |     int omega, s=0, i, j, n1, n2, pairwise, openIndex = 0, arcIndex = 0;
+      |                               ^~

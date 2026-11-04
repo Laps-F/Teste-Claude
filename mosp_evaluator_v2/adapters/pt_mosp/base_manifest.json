@@ -1,0 +1,66 @@
+{
+  "base_archive": "PT-MOSP-main.zip",
+  "base_archive_sha256": "929adddf206ad92361c862eead1c1dc22d746a98a73574a68d7c3eda83c07ea2",
+  "files": [
+    {
+      "path": "MOSP/MOSP.h",
+      "original_sha256": "36cefbea21c4ceedd33b263618d48868439e45937f7bdd47afc12599a3a0c6a1",
+      "patched_sha256": "39ec928a83942e5851fb888ab108077efde7f78201947a5286ab3932f3479ea7"
+    },
+    {
+      "path": "MOSP/MOSP.cpp",
+      "original_sha256": "332307f657a0b8abef5c74ed1780f9e03a3afb53e3fb27b1df2b3ebfd2f9ea32",
+      "patched_sha256": "716e02af9064695333e672e6a9d456ca83a48a0e7591f2cbdbb620f7db8213d2"
+    },
+    {
+      "path": "MOSP/mainMOSP.cpp",
+      "original_sha256": "e3e382c1b8527571d8059c8058c4fbda6e3b1dada2bbe7b02240e090477cc9eb",
+      "patched_sha256": "7c609e1a208ee14303f67af6d19554f95e74a4963664c91d9a2ded9db696f2d7"
+    },
+    {
+      "path": "MOSP/Makefile",
+      "original_sha256": "fc6e55fb40a4af70afb17471203a269cf64bdf560c6a1829a38903665648b4c6",
+      "patched_sha256": "804e9eef962b82f9bf523870ec0cf821d6451cbf7c463fe0360432d0af969a81"
+    },
+    {
+      "path": "MOSP/mosp_evaluator.mk",
+      "original_sha256": null,
+      "patched_sha256": "1a34ffebd6af330c872084885c7c1efdf5c92d0a4f2b2068cbd32ad6523332b2"
+    },
+    {
+      "path": "MOSP/MCNH/HNCM.h",
+      "original_sha256": "43014be148ab16af2b4cb5abf7306ae4109ee548830f902ff6c3e14ce1a6ea5c",
+      "patched_sha256": "c918e43533986f483d22a5d64ecdcf31b61789ff2e6850627e7737b28e3d970b"
+    },
+    {
+      "path": "PTAPI-main/include/Problem.h",
+      "original_sha256": "a7f60f23ffd4fc24f1dcd5251551467ee9b908971c4df39b712f2000f1a5cb1b",
+      "patched_sha256": "f0a2615629cf4dea87e313640277da09b1d1a341a712e644d4a77a10c8b9d4e3"
+    },
+    {
+      "path": "PTAPI-main/include/Node.h",
+      "original_sha256": "2493e01a552126716d18bc587067b4a0203876f92fbf04c846807f306edfcf14",
+      "patched_sha256": "58a7046a5ac3440845f7d25285467651e2bebf2ae91d40aface2a45c0c630d4f"
+    },
+    {
+      "path": "PTAPI-main/include/NodeMCMC.h",
+      "original_sha256": "0846eb9daf4babc391fdab3308be1b10d4432957d19053987535f7bddb80b12f",
+      "patched_sha256": "c3083bb260cce33bb2a0f78d4bed9268f7eade28366c54bc99df0685044d5970"
+    },
+    {
+      "path": "PTAPI-main/include/NodeSwap.h",
+      "original_sha256": "05c5e9e553efc42ae5fa1c819c71fc3d745219965a1f038228739ed9b23d24aa",
+      "patched_sha256": "58799f0ff636ddf2e0ad9883907cb46edee13eebd6d51e4cebec891c2a921152"
+    },
+    {
+      "path": "PTAPI-main/include/Consumer.h",
+      "original_sha256": "26f4f22b9cf1120c292b9e5778580d3c930b74bc2c5922220c254f9f8cf21deb",
+      "patched_sha256": "ec248592169f05ffd4934a3905973fc9cafc9e1768c6f14adf65c4d95f6eae00"
+    },
+    {
+      "path": "PTAPI-main/include/PT.h",
+      "original_sha256": "e94099419984d69af9b963459a26a66d2a3a04b7f8a42d396e9e854a33eb7c67",
+      "patched_sha256": "b6cac91858ea3da99a4e69b818002b2eb1823fc9e34579ade81b60c675d8a4af"
+    }
+  ]
+}

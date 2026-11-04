@@ -1,0 +1,4400 @@
+{
+  "status": "PASS",
+  "pt_configurations": 72,
+  "edge_cases": 4,
+  "pt_proposals_audited": 37632,
+  "records": [
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011251187,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 261,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012588306,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 247,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        4,
+        5,
+        3,
+        6,
+        2,
+        1,
+        0
+      ],
+      "pattern_sequence": [
+        4,
+        5,
+        3,
+        6,
+        2,
+        1,
+        0
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013756689,
+      "calibration_seconds": 0.002045569,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 245,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1931.3333333333333,
+          "incremental_ns": 1974.6666666666667
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2206.6666666666665,
+          "incremental_ns": 2567.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3723.8333333333335,
+          "incremental_ns": 919.6666666666666
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 5319.666666666667,
+          "incremental_ns": 5081
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2699,
+          "incremental_ns": 761.1666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3156.5,
+          "incremental_ns": 2739.1666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2680.6666666666665,
+          "incremental_ns": 557.5
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3335.1666666666665,
+          "incremental_ns": 2784.1666666666665
+        }
+      ],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010072537,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 213,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.009784693,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 211,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        4,
+        5,
+        3,
+        6,
+        2,
+        1,
+        0
+      ],
+      "pattern_sequence": [
+        4,
+        5,
+        3,
+        6,
+        2,
+        1,
+        0
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01341966,
+      "calibration_seconds": 0.002254213,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 225,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1999.6666666666667,
+          "incremental_ns": 2208.3333333333335
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2186.6666666666665,
+          "incremental_ns": 2463.6666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3790.6666666666665,
+          "incremental_ns": 742.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5318.166666666667,
+          "incremental_ns": 4989.166666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2336.8333333333335,
+          "incremental_ns": 704.3333333333334
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3522,
+          "incremental_ns": 2834.1666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2423.6666666666665,
+          "incremental_ns": 547.5
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3274.8333333333335,
+          "incremental_ns": 2690.8333333333335
+        }
+      ],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011029323,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 270,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        5,
+        4,
+        3
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        5,
+        4,
+        3
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011401083,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 294,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012467964,
+      "calibration_seconds": 0.002094172,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 250,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1969.6666666666667,
+          "incremental_ns": 1984.6666666666667
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2223.3333333333335,
+          "incremental_ns": 2483.6666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3865.8333333333335,
+          "incremental_ns": 747.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5391.333333333333,
+          "incremental_ns": 4910.833333333333
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2311.8333333333335,
+          "incremental_ns": 827.8333333333334
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 3206.5,
+          "incremental_ns": 3093
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2523.8333333333335,
+          "incremental_ns": 415.6666666666667
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 4054.3333333333335,
+          "incremental_ns": 2914.5
+        }
+      ],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013545901,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 232,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012440313,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 232,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013800836,
+      "calibration_seconds": 0.002403909,
+      "full_evaluations": 22,
+      "incremental_evaluations": 490,
+      "local_applications": 229,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1881.1666666666667,
+          "incremental_ns": 1973
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2106.5,
+          "incremental_ns": 2488.8333333333335
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3777.3333333333335,
+          "incremental_ns": 714.3333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5673.5,
+          "incremental_ns": 5121.166666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 1901.1666666666667,
+          "incremental_ns": 711
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3266.5,
+          "incremental_ns": 3048
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2560.6666666666665,
+          "incremental_ns": 597.6666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 3228.3333333333335,
+          "incremental_ns": 3368.3333333333335
+        }
+      ],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01291602,
+      "calibration_seconds": 0,
+      "full_evaluations": 441,
+      "incremental_evaluations": 0,
+      "local_applications": 323,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        4,
+        3,
+        2,
+        6,
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        5,
+        4,
+        3,
+        2,
+        6,
+        0,
+        1
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011356827,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 444,
+      "local_applications": 310,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        4,
+        3,
+        6,
+        5,
+        2,
+        1,
+        0
+      ],
+      "pattern_sequence": [
+        4,
+        3,
+        6,
+        5,
+        2,
+        1,
+        0
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012701476,
+      "calibration_seconds": 0.001979238,
+      "full_evaluations": 12,
+      "incremental_evaluations": 422,
+      "local_applications": 311,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        4,
+        3,
+        5,
+        0,
+        6,
+        2,
+        1
+      ],
+      "pattern_sequence": [
+        4,
+        3,
+        5,
+        0,
+        6,
+        2,
+        1
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1969.6666666666667,
+          "incremental_ns": 2036.5
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2240,
+          "incremental_ns": 2493.6666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 4102.833333333333,
+          "incremental_ns": 577.6666666666666
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 4999.166666666667,
+          "incremental_ns": 5069.333333333333
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2166.6666666666665,
+          "incremental_ns": 706
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3325,
+          "incremental_ns": 2595.5
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2385.3333333333335,
+          "incremental_ns": 721.1666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3076.3333333333335,
+          "incremental_ns": 2565.5
+        }
+      ],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011268233,
+      "calibration_seconds": 0,
+      "full_evaluations": 443,
+      "incremental_evaluations": 0,
+      "local_applications": 255,
+      "exchange_synchronizations": 24,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        4,
+        3,
+        6,
+        2,
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        5,
+        4,
+        3,
+        6,
+        2,
+        0,
+        1
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011536427,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 439,
+      "local_applications": 259,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        0,
+        1,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        0,
+        1,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01450581,
+      "calibration_seconds": 0.002330949,
+      "full_evaluations": 0,
+      "incremental_evaluations": 436,
+      "local_applications": 256,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 2121.5,
+          "incremental_ns": 2271.6666666666665
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2400.3333333333335,
+          "incremental_ns": 2603.8333333333335
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3899.1666666666665,
+          "incremental_ns": 729.3333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5354.666666666667,
+          "incremental_ns": 4905.666666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2001.3333333333333,
+          "incremental_ns": 702.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3281.6666666666665,
+          "incremental_ns": 3099.6666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2435.3333333333335,
+          "incremental_ns": 617.5
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 4166.166666666667,
+          "incremental_ns": 2734.1666666666665
+        }
+      ],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011511419,
+      "calibration_seconds": 0,
+      "full_evaluations": 417,
+      "incremental_evaluations": 0,
+      "local_applications": 306,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        0,
+        1,
+        5,
+        2,
+        3,
+        4
+      ],
+      "pattern_sequence": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        3,
+        4
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 19,
+      "mmosp": 3.9047619047619047,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011892315,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 425,
+      "local_applications": 296,
+      "exchange_synchronizations": 38,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        3,
+        1,
+        4,
+        0,
+        2
+      ],
+      "pattern_sequence": [
+        5,
+        3,
+        4,
+        0,
+        6,
+        1,
+        2
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011783981,
+      "calibration_seconds": 0.001818285,
+      "full_evaluations": 428,
+      "incremental_evaluations": 0,
+      "local_applications": 287,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        0,
+        4,
+        3,
+        1,
+        2
+      ],
+      "pattern_sequence": [
+        4,
+        3,
+        5,
+        6,
+        0,
+        1,
+        2
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1979.6666666666667,
+          "incremental_ns": 2041.3333333333333
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2231.6666666666665,
+          "incremental_ns": 2645.6666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3523.6666666666665,
+          "incremental_ns": 622.5
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5453.166666666667,
+          "incremental_ns": 4964.166666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2295.1666666666665,
+          "incremental_ns": 637.5
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3612,
+          "incremental_ns": 2986.1666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2640.6666666666665,
+          "incremental_ns": 739.5
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3174.8333333333335,
+          "incremental_ns": 2707.5
+        }
+      ],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011520994,
+      "calibration_seconds": 0,
+      "full_evaluations": 413,
+      "incremental_evaluations": 0,
+      "local_applications": 249,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011715358,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 423,
+      "local_applications": 245,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012419316,
+      "calibration_seconds": 0.001765706,
+      "full_evaluations": 419,
+      "incremental_evaluations": 0,
+      "local_applications": 245,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1906.1666666666667,
+          "incremental_ns": 2068
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2123.1666666666665,
+          "incremental_ns": 2487.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3708.8333333333335,
+          "incremental_ns": 757.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5087.666666666667,
+          "incremental_ns": 4830.666666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2118.1666666666665,
+          "incremental_ns": 612.5
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3186.5,
+          "incremental_ns": 2859.3333333333335
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2490.5,
+          "incremental_ns": 747.8333333333334
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 2944.5,
+          "incremental_ns": 2749.1666666666665
+        }
+      ],
+      "read": 0,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011796871,
+      "calibration_seconds": 0,
+      "full_evaluations": 420,
+      "incremental_evaluations": 0,
+      "local_applications": 331,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012386881,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 414,
+      "local_applications": 321,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013393121,
+      "calibration_seconds": 0.001822161,
+      "full_evaluations": 403,
+      "incremental_evaluations": 0,
+      "local_applications": 336,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 2068,
+          "incremental_ns": 1999.8333333333333
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2201.6666666666665,
+          "incremental_ns": 2512.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3941,
+          "incremental_ns": 737.6666666666666
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5434.833333333333,
+          "incremental_ns": 4855.666666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2846,
+          "incremental_ns": 851.3333333333334
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3211.5,
+          "incremental_ns": 2999.5
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2680.8333333333335,
+          "incremental_ns": 614.3333333333334
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3293.3333333333335,
+          "incremental_ns": 2906
+        }
+      ],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012084089,
+      "calibration_seconds": 0,
+      "full_evaluations": 436,
+      "incremental_evaluations": 0,
+      "local_applications": 251,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011893642,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 417,
+      "local_applications": 272,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013430397,
+      "calibration_seconds": 0.002002734,
+      "full_evaluations": 412,
+      "incremental_evaluations": 0,
+      "local_applications": 264,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1954.6666666666667,
+          "incremental_ns": 2318.5
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2270,
+          "incremental_ns": 2480.5
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3321.6666666666665,
+          "incremental_ns": 592.5
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5346.5,
+          "incremental_ns": 4895.666666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2450.5,
+          "incremental_ns": 667.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3248.1666666666665,
+          "incremental_ns": 2874.3333333333335
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2488.8333333333335,
+          "incremental_ns": 767.8333333333334
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 2982.8333333333335,
+          "incremental_ns": 2750.8333333333335
+        }
+      ],
+      "read": 0,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011752424,
+      "calibration_seconds": 0,
+      "full_evaluations": 314,
+      "incremental_evaluations": 0,
+      "local_applications": 365,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011643419,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 306,
+      "local_applications": 376,
+      "exchange_synchronizations": 40,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012959065,
+      "calibration_seconds": 0.001739887,
+      "full_evaluations": 291,
+      "incremental_evaluations": 0,
+      "local_applications": 381,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1896.1666666666667,
+          "incremental_ns": 1954.6666666666667
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2130,
+          "incremental_ns": 2397
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3376.6666666666665,
+          "incremental_ns": 601
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5359.666666666667,
+          "incremental_ns": 4769
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2438.6666666666665,
+          "incremental_ns": 646
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3358.5,
+          "incremental_ns": 2674.1666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2580.5,
+          "incremental_ns": 626
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3126.3333333333335,
+          "incremental_ns": 2560.5
+        }
+      ],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011843741,
+      "calibration_seconds": 0,
+      "full_evaluations": 321,
+      "incremental_evaluations": 0,
+      "local_applications": 298,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012456046,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 324,
+      "local_applications": 309,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        0,
+        4,
+        3,
+        1,
+        2
+      ],
+      "pattern_sequence": [
+        4,
+        3,
+        5,
+        6,
+        0,
+        1,
+        2
+      ],
+      "selection": [],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01278951,
+      "calibration_seconds": 0.00192083,
+      "full_evaluations": 325,
+      "incremental_evaluations": 0,
+      "local_applications": 306,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1979.6666666666667,
+          "incremental_ns": 1994.6666666666667
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2311.8333333333335,
+          "incremental_ns": 2614
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3423.5,
+          "incremental_ns": 575.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5540,
+          "incremental_ns": 4987.5
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2283.5,
+          "incremental_ns": 677.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3575.3333333333335,
+          "incremental_ns": 2966.1666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2547.1666666666665,
+          "incremental_ns": 761.1666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3124.6666666666665,
+          "incremental_ns": 2749.1666666666665
+        }
+      ],
+      "read": 0,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010413072,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 273,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01090838,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 267,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011499082,
+      "calibration_seconds": 0.00253695,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 270,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1949.6666666666667,
+          "incremental_ns": 1993.1666666666667
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2168.3333333333335,
+          "incremental_ns": 2507
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3585.5,
+          "incremental_ns": 692.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5443.166666666667,
+          "incremental_ns": 4974.166666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2043.1666666666667,
+          "incremental_ns": 772.8333333333334
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3398.3333333333335,
+          "incremental_ns": 2679
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2759.1666666666665,
+          "incremental_ns": 429
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3476.8333333333335,
+          "incremental_ns": 2791
+        }
+      ],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010736654,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 206,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.008467514,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 229,
+      "exchange_synchronizations": 18,
+      "audited_evaluations": 512,
+      "solution": [
+        2,
+        1,
+        0,
+        6,
+        5,
+        4,
+        3
+      ],
+      "pattern_sequence": [
+        2,
+        1,
+        0,
+        6,
+        5,
+        4,
+        3
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011915821,
+      "calibration_seconds": 0.001842452,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 210,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1983,
+          "incremental_ns": 1966.3333333333333
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2198.3333333333335,
+          "incremental_ns": 2457.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 4578.5,
+          "incremental_ns": 572.5
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5449.833333333333,
+          "incremental_ns": 4692
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2054.8333333333335,
+          "incremental_ns": 696
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3325,
+          "incremental_ns": 2892.6666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2443.6666666666665,
+          "incremental_ns": 604.1666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 3243.1666666666665,
+          "incremental_ns": 3243.1666666666665
+        }
+      ],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010053218,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 275,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        4,
+        3,
+        2,
+        6,
+        1,
+        0
+      ],
+      "pattern_sequence": [
+        5,
+        4,
+        3,
+        2,
+        6,
+        1,
+        0
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010145948,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 258,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013841438,
+      "calibration_seconds": 0.002005348,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 287,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1978,
+          "incremental_ns": 2028
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2240,
+          "incremental_ns": 2535.5
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3415.1666666666665,
+          "incremental_ns": 584.3333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5438.333333333333,
+          "incremental_ns": 4950.833333333333
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2664,
+          "incremental_ns": 674.3333333333334
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3847.5,
+          "incremental_ns": 2942.6666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2654,
+          "incremental_ns": 646
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3503.6666666666665,
+          "incremental_ns": 2588.8333333333335
+        }
+      ],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010001229,
+      "calibration_seconds": 0,
+      "full_evaluations": 512,
+      "incremental_evaluations": 0,
+      "local_applications": 239,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        4,
+        3,
+        5,
+        6,
+        2,
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        4,
+        3,
+        5,
+        6,
+        2,
+        0,
+        1
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011357282,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 233,
+      "exchange_synchronizations": 26,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.014126569,
+      "calibration_seconds": 0.002376889,
+      "full_evaluations": 0,
+      "incremental_evaluations": 512,
+      "local_applications": 212,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1948,
+          "incremental_ns": 2186.6666666666665
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2225,
+          "incremental_ns": 2645.6666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3488.5,
+          "incremental_ns": 570.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 5420,
+          "incremental_ns": 5167.666666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2136.6666666666665,
+          "incremental_ns": 919.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 3196.5,
+          "incremental_ns": 3051.3333333333335
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2784.3333333333335,
+          "incremental_ns": 632.6666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3043,
+          "incremental_ns": 2799.1666666666665
+        }
+      ],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011086588,
+      "calibration_seconds": 0,
+      "full_evaluations": 441,
+      "incremental_evaluations": 0,
+      "local_applications": 308,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011134611,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 435,
+      "local_applications": 318,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 17,
+      "mmosp": 3.8095238095238093,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013110343,
+      "calibration_seconds": 0.002054662,
+      "full_evaluations": 12,
+      "incremental_evaluations": 437,
+      "local_applications": 299,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        3,
+        4,
+        6,
+        2,
+        1,
+        0
+      ],
+      "pattern_sequence": [
+        5,
+        3,
+        4,
+        6,
+        2,
+        1,
+        0
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 2046.3333333333333,
+          "incremental_ns": 1971.3333333333333
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2388.6666666666665,
+          "incremental_ns": 2548.8333333333335
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3543.6666666666665,
+          "incremental_ns": 694.3333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 5533.333333333333,
+          "incremental_ns": 5288
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2131.6666666666665,
+          "incremental_ns": 761.1666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3171.5,
+          "incremental_ns": 2799.3333333333335
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2667.3333333333335,
+          "incremental_ns": 647.6666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3129.6666666666665,
+          "incremental_ns": 2754.1666666666665
+        }
+      ],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.00986266,
+      "calibration_seconds": 0,
+      "full_evaluations": 437,
+      "incremental_evaluations": 0,
+      "local_applications": 252,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.009868359,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 439,
+      "local_applications": 268,
+      "exchange_synchronizations": 28,
+      "audited_evaluations": 512,
+      "solution": [
+        0,
+        1,
+        2,
+        6,
+        3,
+        5,
+        4
+      ],
+      "pattern_sequence": [
+        0,
+        1,
+        2,
+        6,
+        3,
+        5,
+        4
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.015095235,
+      "calibration_seconds": 0.001948582,
+      "full_evaluations": 0,
+      "incremental_evaluations": 441,
+      "local_applications": 252,
+      "exchange_synchronizations": 24,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 2019.6666666666667,
+          "incremental_ns": 2076.5
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2156.6666666666665,
+          "incremental_ns": 2497.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3850.8333333333335,
+          "incremental_ns": 555.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5500,
+          "incremental_ns": 4972.5
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 1899.5,
+          "incremental_ns": 652.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3278.3333333333335,
+          "incremental_ns": 2872.6666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2677.3333333333335,
+          "incremental_ns": 672.6666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 3251.6666666666665,
+          "incremental_ns": 3124.6666666666665
+        }
+      ],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.011992136,
+      "calibration_seconds": 0,
+      "full_evaluations": 408,
+      "incremental_evaluations": 0,
+      "local_applications": 316,
+      "exchange_synchronizations": 38,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        4,
+        0,
+        2,
+        3,
+        5
+      ],
+      "pattern_sequence": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012635416,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 420,
+      "local_applications": 298,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013656058,
+      "calibration_seconds": 0.001823913,
+      "full_evaluations": 408,
+      "incremental_evaluations": 0,
+      "local_applications": 303,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        3,
+        2,
+        4,
+        5,
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        3,
+        4,
+        5,
+        2,
+        6,
+        0,
+        1
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1912.8333333333333,
+          "incremental_ns": 2200
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2215,
+          "incremental_ns": 2453.6666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3670.5,
+          "incremental_ns": 580.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5338,
+          "incremental_ns": 4967.5
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2268.5,
+          "incremental_ns": 677.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3281.5,
+          "incremental_ns": 2829.3333333333335
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2665.6666666666665,
+          "incremental_ns": 609.3333333333334
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 2941.1666666666665,
+          "incremental_ns": 2747.5
+        }
+      ],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012261588,
+      "calibration_seconds": 0,
+      "full_evaluations": 413,
+      "incremental_evaluations": 0,
+      "local_applications": 244,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.009558301,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 431,
+      "local_applications": 229,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013586393,
+      "calibration_seconds": 0.002008913,
+      "full_evaluations": 411,
+      "incremental_evaluations": 0,
+      "local_applications": 259,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1968,
+          "incremental_ns": 2190
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2155,
+          "incremental_ns": 2739.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3845.6666666666665,
+          "incremental_ns": 779.5
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5488.166666666667,
+          "incremental_ns": 4992.5
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 1881.1666666666667,
+          "incremental_ns": 744.5
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3255,
+          "incremental_ns": 3039.5
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2854.3333333333335,
+          "incremental_ns": 971.5
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3353.5,
+          "incremental_ns": 2724.1666666666665
+        }
+      ],
+      "read": 1,
+      "move": 0
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.020298086,
+      "calibration_seconds": 0,
+      "full_evaluations": 404,
+      "incremental_evaluations": 0,
+      "local_applications": 345,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012653434,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 413,
+      "local_applications": 324,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012951263,
+      "calibration_seconds": 0.002154012,
+      "full_evaluations": 371,
+      "incremental_evaluations": 51,
+      "local_applications": 331,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2006.3333333333333,
+          "incremental_ns": 1901.3333333333333
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2323.5,
+          "incremental_ns": 2622.3333333333335
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3675.5,
+          "incremental_ns": 762.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 5167.833333333333,
+          "incremental_ns": 5012.5
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2286.6666666666665,
+          "incremental_ns": 637.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3333.3333333333335,
+          "incremental_ns": 2887.8333333333335
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2655.6666666666665,
+          "incremental_ns": 788
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2869.3333333333335,
+          "incremental_ns": 2799.3333333333335
+        }
+      ],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.010895365,
+      "calibration_seconds": 0,
+      "full_evaluations": 416,
+      "incremental_evaluations": 0,
+      "local_applications": 271,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01109401,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 415,
+      "local_applications": 260,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 512,
+      "solution": [
+        2,
+        1,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.014486822,
+      "calibration_seconds": 0.001838055,
+      "full_evaluations": 410,
+      "incremental_evaluations": 0,
+      "local_applications": 269,
+      "exchange_synchronizations": 32,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        3,
+        2,
+        0,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1949.5,
+          "incremental_ns": 1983
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2253.3333333333335,
+          "incremental_ns": 2774.1666666666665
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3725.6666666666665,
+          "incremental_ns": 746
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5591.833333333333,
+          "incremental_ns": 4959.166666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 1866.1666666666667,
+          "incremental_ns": 674.3333333333334
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3255,
+          "incremental_ns": 3043
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2977.8333333333335,
+          "incremental_ns": 615.8333333333334
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3296.6666666666665,
+          "incremental_ns": 2939.3333333333335
+        }
+      ],
+      "read": 1,
+      "move": 1
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.012972186,
+      "calibration_seconds": 0,
+      "full_evaluations": 323,
+      "incremental_evaluations": 0,
+      "local_applications": 358,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 18,
+      "mmosp": 3.857142857142857,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013043292,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 317,
+      "local_applications": 362,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        2,
+        3,
+        4,
+        5,
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        3,
+        4,
+        5,
+        2,
+        6,
+        0,
+        1
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 19,
+      "mmosp": 3.9047619047619047,
+      "energy": 3,
+      "energy_mode": "mosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.016587373,
+      "calibration_seconds": 0.002855432,
+      "full_evaluations": 315,
+      "incremental_evaluations": 0,
+      "local_applications": 376,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 512,
+      "solution": [
+        5,
+        3,
+        2,
+        4,
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        5,
+        3,
+        4,
+        2,
+        6,
+        0,
+        1
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 2064.6666666666665,
+          "incremental_ns": 2113.3333333333335
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2143.1666666666665,
+          "incremental_ns": 2452
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3228.1666666666665,
+          "incremental_ns": 575.8333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 5166.166666666667,
+          "incremental_ns": 15875.666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2141.5,
+          "incremental_ns": 711
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3350,
+          "incremental_ns": 3054.6666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2600.5,
+          "incremental_ns": 667.6666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3101.3333333333335,
+          "incremental_ns": 2919.5
+        }
+      ],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "full",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01321352,
+      "calibration_seconds": 0,
+      "full_evaluations": 325,
+      "incremental_evaluations": 0,
+      "local_applications": 302,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "incremental",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.013372209,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 324,
+      "local_applications": 287,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5
+      ],
+      "pattern_sequence": [
+        1,
+        0,
+        2,
+        6,
+        3,
+        4,
+        5
+      ],
+      "selection": [],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 3,
+      "total_open": 16,
+      "mmosp": 3.761904761904762,
+      "energy": 3.761904761904762,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "items",
+      "density": 0.3333333333333333,
+      "wall_seconds": 0.01720166,
+      "calibration_seconds": 0.002221444,
+      "full_evaluations": 312,
+      "incremental_evaluations": 0,
+      "local_applications": 309,
+      "exchange_synchronizations": 34,
+      "audited_evaluations": 512,
+      "solution": [
+        1,
+        0,
+        2,
+        3,
+        5,
+        4
+      ],
+      "pattern_sequence": [
+        0,
+        1,
+        2,
+        6,
+        5,
+        3,
+        4
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1919.6666666666667,
+          "incremental_ns": 1998
+        },
+        {
+          "input": 0,
+          "max_interval": 7,
+          "backend": "full",
+          "full_ns": 2557.1666666666665,
+          "incremental_ns": 2657.3333333333335
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3435.1666666666665,
+          "incremental_ns": 734.5
+        },
+        {
+          "input": 1,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 5463.166666666667,
+          "incremental_ns": 4864
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2537.1666666666665,
+          "incremental_ns": 681
+        },
+        {
+          "input": 2,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3239.8333333333335,
+          "incremental_ns": 2971.1666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2634,
+          "incremental_ns": 662.6666666666666
+        },
+        {
+          "input": 3,
+          "max_interval": 7,
+          "backend": "incremental",
+          "full_ns": 3208.1666666666665,
+          "incremental_ns": 2991.1666666666665
+        }
+      ],
+      "read": 1,
+      "move": 2
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 1,
+      "total_open": 1,
+      "mmosp": 2,
+      "energy": 2,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 1,
+      "wall_seconds": 0.004537982,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 0,
+      "local_applications": 192,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 192,
+      "solution": [
+        0
+      ],
+      "pattern_sequence": [
+        0
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 1,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 2,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 3,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        }
+      ],
+      "edge_case": "singleton"
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 1,
+      "total_open": 2,
+      "mmosp": 1.5,
+      "energy": 1.5,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0.25,
+      "wall_seconds": 0.010053709,
+      "calibration_seconds": 0.001954832,
+      "full_evaluations": 0,
+      "incremental_evaluations": 139,
+      "local_applications": 129,
+      "exchange_synchronizations": 30,
+      "audited_evaluations": 192,
+      "solution": [
+        1,
+        3,
+        0,
+        2
+      ],
+      "pattern_sequence": [
+        1,
+        3,
+        0,
+        2
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 1956.3333333333333,
+          "incremental_ns": 2406.8333333333335
+        },
+        {
+          "input": 0,
+          "max_interval": 4,
+          "backend": "incremental",
+          "full_ns": 6332.833333333333,
+          "incremental_ns": 2004.6666666666667
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 3451.8333333333335,
+          "incremental_ns": 634.3333333333334
+        },
+        {
+          "input": 1,
+          "max_interval": 4,
+          "backend": "incremental",
+          "full_ns": 5091,
+          "incremental_ns": 4790.666666666667
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2089.8333333333335,
+          "incremental_ns": 637.6666666666666
+        },
+        {
+          "input": 2,
+          "max_interval": 4,
+          "backend": "incremental",
+          "full_ns": 2916.1666666666665,
+          "incremental_ns": 2493.6666666666665
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "incremental",
+          "full_ns": 2785.8333333333335,
+          "incremental_ns": 575.8333333333334
+        },
+        {
+          "input": 3,
+          "max_interval": 4,
+          "backend": "incremental",
+          "full_ns": 3251.5,
+          "incremental_ns": 2697.5
+        }
+      ],
+      "edge_case": "empty-patterns"
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 0,
+      "total_open": 0,
+      "mmosp": 0,
+      "energy": 0,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0,
+      "wall_seconds": 0.006253061,
+      "calibration_seconds": 0,
+      "full_evaluations": 90,
+      "incremental_evaluations": 0,
+      "local_applications": 192,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 192,
+      "solution": [
+        0,
+        1
+      ],
+      "pattern_sequence": [
+        0,
+        1
+      ],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 1,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 2,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 3,
+          "max_interval": 2,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        }
+      ],
+      "edge_case": "no-items"
+    },
+    {
+      "library_version": "2.0.0",
+      "mosp": 0,
+      "total_open": 0,
+      "mmosp": 0,
+      "energy": 0,
+      "energy_mode": "mmosp",
+      "evaluator": "auto",
+      "sequence": "patterns",
+      "density": 0,
+      "wall_seconds": 0.002847619,
+      "calibration_seconds": 0,
+      "full_evaluations": 0,
+      "incremental_evaluations": 0,
+      "local_applications": 192,
+      "exchange_synchronizations": 36,
+      "audited_evaluations": 192,
+      "solution": [],
+      "pattern_sequence": [],
+      "selection": [
+        {
+          "input": 0,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 1,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 2,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        },
+        {
+          "input": 3,
+          "max_interval": 1,
+          "backend": "full",
+          "full_ns": 0,
+          "incremental_ns": 0
+        }
+      ],
+      "edge_case": "no-patterns"
+    }
+  ]
+}
